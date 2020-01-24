@@ -6,7 +6,7 @@ import fr.formation.masterpieceback.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService{
     private final UserRepository userRepo;
 
     public UserServiceImpl(UserRepository userRepo) {
@@ -33,7 +33,6 @@ public class UserServiceImpl {
 
     @Override
     public void update(Long id, UserDto dto) {
-        // findById returns an Optional object!
         User user = userRepo.findById(id).get();
         populateAndSave(dto, user);
     }
