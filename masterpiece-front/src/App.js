@@ -1,6 +1,6 @@
 import React from 'react';
-import SignupForm from './components/SignupForm';
-import NavBar from './components/Navbar'
+import SignupForm from './components/Signup/SignupForm';
+import NavBar from './components/Navbar/Navbar'
 
 function App() {
   return (

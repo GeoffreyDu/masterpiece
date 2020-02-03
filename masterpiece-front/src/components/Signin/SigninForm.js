@@ -61,7 +61,7 @@ const form = props => {
                             fullWidth
                             />
                         </CardContent>
-                        <CardActions>
+                        <CardActions className="button">
                             <Button type="submit" color="primary" disabled={isSubmitting}>
                             Connexion
                             </Button>

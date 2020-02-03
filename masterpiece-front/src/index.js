@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import './App.css';
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar/Navbar'
 import * as serviceWorker from './serviceWorker';
-import SignupForm from './components/SignupForm';
-import SigninForm from './components/SigninForm';
+import SignupForm from './components/Signup/SignupForm';
+import SigninForm from './components/Signin/SigninForm';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 const Root = ()=>{

@@ -65,7 +65,11 @@ function NavBar(props) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.toolbar} style={{display: 'flex'}}>
+        <Typography style={{display: 'flex', margin: 'auto'}} variant='h6' noWrap>
+          <Link style={{margin:'auto'}} className='linkDrawer' to={'/'}>Logo</Link>
+        </Typography>
+      </div>
       <Divider />
       <List>
         {[
@@ -74,7 +78,7 @@ function NavBar(props) {
             {text:'Aide', icon: <HelpIcon/>}].map(({text, icon}) => (
             <ListItem button key={text}>
                 <ListItemIcon>{icon}</ListItemIcon>
-                <Link to={`/${text}`}><ListItemText className='linkDrawer' primary={text} /></Link>
+                <Link className='linkDrawer' to={`/${text}`}><ListItemText primary={text} /></Link>
             </ListItem>
         ))}
       </List>
@@ -96,14 +100,14 @@ function NavBar(props) {
             <MenuIcon />
             </IconButton>
             <Typography variant='h6' noWrap>
-                Logo
+                <Link className='link' to={'/'}>Logo</Link>
             </Typography>
             <Hidden smDown>
                 <div style={{flexGrow:1}}></div>
                 <List style={{display: 'flex'}}>
                 {['Inscription', 'Connexion', 'Aide'].map((text) => (
                 <ListItem button key={text}>
-                    <Link to={`/${text}`}><ListItemText className='link' primary={text} /></Link>
+                    <Link className='link' to={`/${text}`}><ListItemText primary={text} /></Link>
                 </ListItem>
                 ))}
                 </List>
