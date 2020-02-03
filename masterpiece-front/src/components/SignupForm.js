@@ -1,30 +1,16 @@
 import React from "react";
 import { withFormik } from "formik";
 import * as Yup from "yup";
-import { withStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-
-const styles = () => ({
-  card: {
-    maxWidth: 420,
-    marginTop: 50
-  },
-  container: {
-    display: "Flex",
-    justifyContent: "center"
-  },
-  actions: {
-    float: "right"
-  }
-});
+import Grid from "@material-ui/core/Grid";
+import axios from "axios";
 
 const form = props => {
   const {
-    classes,
     values,
     touched,
     errors,
@@ -36,80 +22,112 @@ const form = props => {
   } = props;
 
   return (
-    <div className={classes.container}>
-      <form onSubmit={handleSubmit}>
-        <Card className={classes.card}>
-            <h1>Création de compte</h1>
-          <CardContent>
-            <TextField
-              id="email"
-              label="Mail"
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              helperText={touched.email ? errors.email : ""}
-              error={touched.email && Boolean(errors.email)}
-              margin="dense"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              id="password"
-              label="Mot de passe"
-              type="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              helperText={touched.password ? errors.password : ""}
-              error={touched.password && Boolean(errors.password)}
-              margin="dense"
-              variant="outlined"
-              fullWidth
-            />
-          </CardContent>
-          <CardActions className={classes.actions}>
-            <Button type="submit" color="primary" disabled={isSubmitting}>
-              Créer
-            </Button>
-            <Button color="secondary" onClick={handleReset}>
-              Réinitialiser
-            </Button>
-          </CardActions>
-        </Card>
-      </form>
-    </div>
+    <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh'}}
+      >
+        <Grid item xs={11}>
+          <div>
+            <form onSubmit={handleSubmit}>
+              <Card>
+                <h1>Création de compte</h1>
+                <CardContent>
+                  <TextField
+                    id="mail"
+                    label="Mail"
+                    type="mail"
+                    value={values.mail}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.mail ? errors.mail : ""}
+                    error={touched.mail && Boolean(errors.mail)}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                  <TextField
+                    id="password"
+                    label="Mot de passe"
+                    type="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.password ? errors.password : ""}
+                    error={touched.password && Boolean(errors.password)}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                  <TextField
+                    id="confirmPassword"
+                    label="Confirmation mot de passe"
+                    type="password"
+                    value={values.confirmPassword}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.confirmPassword ? errors.confirmPassword : ""}
+                    error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </CardContent>
+                <CardActions>
+                  <Button type="submit" color="primary" disabled={isSubmitting}>
+                    Créer
+                  </Button>
+                  <Button color="secondary" onClick={handleReset}>
+                    Réinitialiser
+                  </Button>
+                </CardActions>
+              </Card>
+            </form>
+          </div>
+        </Grid>
+      </Grid>
   );
 };
 
-const Form = withFormik({
+const SignupForm = withFormik({
   mapPropsToValues: ({
-    email,
+    mail,
     password,
+    confirmPassword
   }) => {
     return {
-      email: email || "",
+      mail: mail || "",
       password: password || "",
+      confirmPassword: confirmPassword || "",
     };
   },
 
   validationSchema: Yup.object().shape({
-    email: Yup.string()
+    mail: Yup.string()
       .email("Entrez un mail valide")
       .required("Le mail est requis"),
     password: Yup.string()
-      .min(8, "Le mot de passe doit contenir au moins 8 caractères")
-      .max(12, "Le mot de passe doit contenir maximum 12 caractères")
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "Votre mot de passe doit contenir au minimum 8 caractères, dont au moins: une majuscule, une minuscule, un chiffre et un caractère spécial")
       .required("Entrez votre mot de passe"),
+    confirmPassword: Yup.string()
+    .required("Confirmez votre mot de passe")
+    .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas")
   }),
 
-  handleSubmit: (values, { setSubmitting }) => {
-    setTimeout(() => {
-      // submit to the server
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 1000);
+  handleSubmit: (values, { resetForm }) => {
+    delete values.confirmPassword
+    const user = JSON.stringify(values);
+    console.log(user);
+    
+    axios.post("http://localhost:8081/users", user, {headers:{"Content-Type":"application/json"}})
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+    resetForm()
+    
   }
 })(form);
 
-export default withStyles(styles)(Form);
+export default SignupForm;
