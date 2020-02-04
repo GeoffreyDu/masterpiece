@@ -1,4 +1,5 @@
 import React from "react";
+import './signup.css'
 import { withFormik } from "formik";
 import * as Yup from "yup";
 import Card from "@material-ui/core/Card";

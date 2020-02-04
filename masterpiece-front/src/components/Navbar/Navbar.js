@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './navbar.css'
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -65,9 +66,9 @@ function NavBar(props) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} style={{display: 'flex'}}>
-        <Typography style={{display: 'flex', margin: 'auto'}} variant='h6' noWrap>
-          <Link style={{margin:'auto'}} className='linkDrawer' to={'/'}>Logo</Link>
+      <div className={`${classes.toolbar} flex`}>
+        <Typography className='logoTypo' variant='h6' noWrap>
+          <Link className='linkDrawer' to={'/'}>Logo</Link>
         </Typography>
       </div>
       <Divider />
@@ -103,8 +104,8 @@ function NavBar(props) {
                 <Link className='link' to={'/'}>Logo</Link>
             </Typography>
             <Hidden smDown>
-                <div style={{flexGrow:1}}></div>
-                <List style={{display: 'flex'}}>
+                <div className="rightBar" ></div>
+                <List className='flex'>
                 {['Inscription', 'Connexion', 'Aide'].map((text) => (
                 <ListItem button key={text}>
                     <Link className='link' to={`/${text}`}><ListItemText primary={text} /></Link>

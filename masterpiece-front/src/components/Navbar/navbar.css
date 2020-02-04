@@ -1,0 +1,21 @@
+.link {
+    color: white;
+    text-decoration: none;
+  }
+  
+.linkDrawer {
+  color: black;
+  text-decoration: none;
+}
+
+.flex{
+  display: flex;
+}
+
+.logoTypo{
+  margin: auto !important;
+}
+
+.rightBar{
+  flex-grow: 1;
+}

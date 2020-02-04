@@ -1,4 +1,5 @@
 import React from "react";
+import './signin.css'
 import { withFormik } from "formik";
 import * as Yup from "yup";
 import Card from "@material-ui/core/Card";
@@ -90,7 +91,16 @@ const SigninForm = withFormik({
       .email("Entrez un mail valide")
       .required("Le mail est requis"),
     password: Yup.string()
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "Votre mot de passe doit contenir au minimum 8 caractères, dont au moins: une majuscule, une minuscule, un chiffre et un caractère spécial")
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, 
+      <div>
+        <p>Votre mot de passe doit contenir au minimum 8 caractères, dont au moins:</p>
+        <ul>
+          <li>une majuscule</li>
+          <li>une minuscule</li>
+          <li>un chiffre</li>
+          <li>un caractère spécial</li>
+        </ul>
+      </div>)
       .required("Entrez votre mot de passe"),
   }),
 
