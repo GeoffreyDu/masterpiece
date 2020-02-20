@@ -8,6 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import labels from "../../config/config"
 
 const form = props => {
   const {
@@ -37,7 +38,7 @@ const form = props => {
                         <CardContent>
                             <TextField
                             id="mail"
-                            label="Mail"
+                            label={labels.email}
                             type="mail"
                             value={values.mail}
                             onChange={handleChange}
@@ -50,7 +51,7 @@ const form = props => {
                             />
                             <TextField
                             id="password"
-                            label="Mot de passe"
+                            label={labels.password}
                             type="password"
                             value={values.password}
                             onChange={handleChange}
@@ -64,7 +65,7 @@ const form = props => {
                         </CardContent>
                         <CardActions className="button">
                             <Button type="submit" color="primary" disabled={isSubmitting}>
-                            Connexion
+                              Connexion
                             </Button>
                         </CardActions>
                     </Card>
@@ -106,8 +107,6 @@ const SigninForm = withFormik({
 
   handleSubmit: (values, { resetForm }) => {
     delete values.confirmPassword
-    const user = JSON.stringify(values);
-    console.log(user);
     resetForm()
     alert(values)
     

@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar'
 import * as serviceWorker from './serviceWorker';
 import SignupForm from './components/Signup/SignupForm';
 import SigninForm from './components/Signin/SigninForm';
+import Footer from './components/Footer/Footer';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 const Root = ()=>{
@@ -19,6 +20,7 @@ const Root = ()=>{
               <Route exact path='/inscription' component={SignupForm}/>
               <Route exact path='/connexion' component={SigninForm}/>
             </Switch>
+          <Footer/>
         </div>
       </Router>
     )
