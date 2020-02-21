@@ -13,84 +13,90 @@ import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar"
 import labels from "../../config/config"
 import errorType from "../../error-type/errorType"
 
-class Form extends React.Component{
+const signupForm = props =>{
 
-  state = {
-    open: false
-  }
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleReset,
+    status
+  } = props;
 
-  render(){
-    return (
-      <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-          style={{ minHeight: '100vh'}}
-        >
-          <Grid item xs={11}>
-            <div>
-              <form onSubmit={this.props.handleSubmit}>
-                <Card>
-                  <h1>Création de compte</h1>
-                  <CardContent>
-                    <TextField
-                      id="mail"
-                      label={labels.email}
-                      type="mail"
-                      value={this.props.values.mail}
-                      onChange={this.props.handleChange}
-                      onBlur={this.props.handleBlur}
-                      helperText={this.props.touched.mail ? this.props.errors.mail : ""}
-                      error={this.props.touched.mail && Boolean(this.props.errors.mail)}
-                      margin="dense"
-                      variant="outlined"
-                      fullWidth
-                    />
-                    <TextField
-                      id="password"
-                      label={labels.password}
-                      type="password"
-                      value={this.props.values.password}
-                      onChange={this.props.handleChange}
-                      onBlur={this.props.handleBlur}
-                      helperText={this.props.touched.password ? this.props.errors.password : ""}
-                      error={this.props.touched.password && Boolean(this.props.errors.password)}
-                      margin="dense"
-                      variant="outlined"
-                      fullWidth
-                    />
-                    <TextField
-                      id="confirmPassword"
-                      label={labels.confirPassword}
-                      type="password"
-                      value={this.props.values.confirmPassword}
-                      onChange={this.props.handleChange}
-                      onBlur={this.props.handleBlur}
-                      helperText={this.props.touched.confirmPassword ? this.props.errors.confirmPassword : ""}
-                      error={this.props.touched.confirmPassword && Boolean(this.props.errors.confirmPassword)}
-                      margin="dense"
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </CardContent>
-                  <CardActions className="button">
-                    <Button type="submit" color="primary" disabled={this.props.isSubmitting}>
-                      Créer
-                    </Button>
-                    <Button color="secondary" onClick={this.props.handleReset}>
-                      Réinitialiser
-                    </Button>
-                  </CardActions>
-                </Card>
-              </form>
-            </div>
-          </Grid>
-          {this.props.status ? <ErrorSnackbar message={this.props.status}/>: null}
+  return (
+    <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh'}}
+      >
+        <Grid item xs={11}>
+          <div>
+            <form onSubmit={handleSubmit}>
+              <Card>
+                <h1>Création de compte</h1>
+                <CardContent>
+                  <TextField
+                    id="mail"
+                    label={labels.email}
+                    type="mail"
+                    value={values.mail}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.mail ? errors.mail : ""}
+                    error={touched.mail && Boolean(errors.mail)}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                  <TextField
+                    id="password"
+                    label={labels.password}
+                    type="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.password ? errors.password : ""}
+                    error={touched.password && Boolean(errors.password)}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                  <TextField
+                    id="confirmPassword"
+                    label={labels.confirPassword}
+                    type="password"
+                    value={values.confirmPassword}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.confirmPassword ? errors.confirmPassword : ""}
+                    error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </CardContent>
+                <CardActions className="button">
+                  <Button type="submit" color="primary" disabled={isSubmitting}>
+                    Créer
+                  </Button>
+                  <Button color="secondary" onClick={handleReset}>
+                    Réinitialiser
+                  </Button>
+                </CardActions>
+              </Card>
+            </form>
+          </div>
         </Grid>
-    );
-  }
+        {status ? <ErrorSnackbar message={status.message} severity={status.severity}/>: null}
+      </Grid>
+  );
 };
 
 const SignupForm = withFormik({
@@ -111,9 +117,9 @@ const SignupForm = withFormik({
       .email("Entrez un mail valide")
       .required("Le mail est requis"),
     password: Yup.string()
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})/,
       <div>
-      <p>Votre mot de passe doit contenir au minimum 8 caractères, dont au moins:</p>
+        <p>Votre mot de passe doit contenir entre 8 et 20 caractères, dont au moins:</p>
         <ul>
           <li>une majuscule</li>
           <li>une minuscule</li>
@@ -132,15 +138,24 @@ const SignupForm = withFormik({
     const user = JSON.stringify(values);
     
     axios.post("http://localhost:8081/users", user, {headers:{"Content-Type":"application/json"}})
-    .then(response => console.log(response))
+    .then(response => {
+      console.log(response)
+      setStatus({
+        message: "Compte créé avec succès",
+        severity: "success"
+      })
+    })
     .catch(error => {
       let errMessage = errorType(error.response)
       console.log(error.response)
-      setStatus(errMessage)
+      setStatus({
+        message: errMessage,
+        severity: "warning"
+      })
       }
     )
     resetForm()
   }
-})(Form);
+})(signupForm);
 
 export default SignupForm;
