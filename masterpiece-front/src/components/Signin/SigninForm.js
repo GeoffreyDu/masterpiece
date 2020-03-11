@@ -8,7 +8,12 @@ import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import labels from "../../config/config"
+import labels from "../../config/config";
+import { Link } from "@material-ui/core";
+
+const cardStyle = {
+  marginBottom: "15px"
+}
 
 const form = props => {
   const {
@@ -33,7 +38,7 @@ const form = props => {
         <Grid item xs={11}>
             <div>
                 <form onSubmit={handleSubmit}>
-                    <Card>
+                    <Card style={cardStyle}>
                         <h1>Connexion</h1>
                         <CardContent>
                             <TextField
@@ -69,6 +74,7 @@ const form = props => {
                             </Button>
                         </CardActions>
                     </Card>
+                    <Link href='/inscription' variant="body2">Vous n'avez pas de compte? Inscription</Link>
                 </form>
             </div>
         </Grid>

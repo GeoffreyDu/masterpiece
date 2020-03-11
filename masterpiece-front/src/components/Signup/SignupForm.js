@@ -12,6 +12,11 @@ import axios from "axios";
 import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar"
 import labels from "../../config/config"
 import errorType from "../../error-type/errorType"
+import { Link } from "@material-ui/core";
+
+const cardStyle = {
+  marginBottom: "20px"
+}
 
 const signupForm = props =>{
 
@@ -39,7 +44,7 @@ const signupForm = props =>{
         <Grid item xs={11}>
           <div>
             <form onSubmit={handleSubmit}>
-              <Card>
+              <Card style={cardStyle}>
                 <h1>Création de compte</h1>
                 <CardContent>
                   <TextField
@@ -91,6 +96,7 @@ const signupForm = props =>{
                   </Button>
                 </CardActions>
               </Card>
+              <Link href='/connexion' variant="body2">Vous avez déjà un compte? Connexion</Link>     
             </form>
           </div>
         </Grid>
