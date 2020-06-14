@@ -3,13 +3,16 @@ package fr.formation.masterpieceback.entities;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "roles", uniqueConstraints = {
+        @UniqueConstraint(name = "roles_code_UQ", columnNames = {"code"})
+})
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String code;
 
     @Column(nullable = false)
