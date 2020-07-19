@@ -1,13 +1,12 @@
 import React from 'react';
 
-const trans = 'translate(-50%)';
-
 const footerStyle = {
+    position: 'relative',
+    top: '95vh',
     textAlign: 'center',
-    position: 'absolute',
     bottom: 0,
     left: '50%',
-    transform: trans,
+    transform: 'translateX(-50%)',
     fontSize: '0.8em',
     color: '#B3B3B3'
 }
