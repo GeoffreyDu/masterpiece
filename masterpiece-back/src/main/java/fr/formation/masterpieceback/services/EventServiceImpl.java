@@ -7,6 +7,9 @@ import fr.formation.masterpieceback.entities.User;
 import fr.formation.masterpieceback.repositories.EventRepository;
 import fr.formation.masterpieceback.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,20 +18,24 @@ import java.util.Optional;
 public class EventServiceImpl implements EventService{
     private final EventRepository eventRepo;
     private final UserRepository userRepo;
+    private final ModelMapper mapper;
 
-    public EventServiceImpl(EventRepository eventRepo, UserRepository userRepo) {
+    public EventServiceImpl(EventRepository eventRepo, UserRepository userRepo, ModelMapper mapper) {
         this.eventRepo = eventRepo;
         this.userRepo = userRepo;
+        this.mapper = mapper;
     }
 
     @Override
     public void create(EventDto dto){
-        Event event = new Event();
+        /*Event event = new Event();
         event.setTitle(dto.getTitle());
         event.setDateTime(dto.getDateTime());
         event.setDescription(dto.getDescription());
         User user = userRepo.findById(dto.getUserId()).get();
-        event.setUserId(user);
+        event.setUser(user);*/
+        // Model Mapper
+        Event event = mapper.map(dto, Event.class);
         eventRepo.save(event);
     }
 
@@ -39,7 +46,6 @@ public class EventServiceImpl implements EventService{
         event.setDateTime(dto.getDateTime());
         event.setDescription(dto.getDescription());
         Long userId = dto.getUserId();
-        User user = null;
 
         eventRepo.save(event);
     }
@@ -53,4 +59,12 @@ public class EventServiceImpl implements EventService{
     public EventViewDto get(Long id){
         return eventRepo.getById(id);
     }
+
+    @Override
+    public Page<EventViewDto> getAllEventByUser(Long userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<EventViewDto> eventList = eventRepo.findAllByUserId(userId, pageable);
+        return eventList;
+    }
+
 }

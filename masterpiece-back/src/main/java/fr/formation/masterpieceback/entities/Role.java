@@ -1,5 +1,7 @@
 package fr.formation.masterpieceback.entities;
 
+import fr.formation.masterpieceback.enums.EnumRole;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,8 +14,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String code;
+    @Column(nullable = false, columnDefinition = "ENUM('ROLE_USER', 'ROLE_ADMIN')")
+    private Enum<EnumRole> code;
 
     @Column(nullable = false)
     private boolean defaultRole;
@@ -29,11 +31,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getCode() {
+    public Enum<EnumRole> getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Enum<EnumRole> code) {
         this.code = code;
     }
 

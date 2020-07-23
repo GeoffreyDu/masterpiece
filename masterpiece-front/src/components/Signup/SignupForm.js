@@ -123,16 +123,7 @@ const SignupForm = withFormik({
       .email("Entrez un mail valide")
       .required("Le mail est requis"),
     password: Yup.string()
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})/,
-      <div>
-        <p>Votre mot de passe doit contenir entre 8 et 20 caractères, dont au moins:</p>
-        <ul>
-          <li>une majuscule</li>
-          <li>une minuscule</li>
-          <li>un chiffre</li>
-          <li>un caractère spécial</li>
-        </ul>
-      </div>)
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})/, "Votre mot de passe doit contenir entre 8 et 20 caractères, dont au moins: une majuscule, une minuscule, un chiffre, un caractère spécial")
       .required("Entrez votre mot de passe"),
     confirmPassword: Yup.string()
     .required("Confirmez votre mot de passe")

@@ -1,9 +1,8 @@
 package fr.formation.masterpieceback.entities;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 
 @Entity
 @Table(name = "events", indexes = {
@@ -25,7 +24,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "events_users_user_id_FK"))
-    private User userId;
+    private User user;
 
     public Event() {
     }
@@ -62,11 +61,11 @@ public class Event {
         this.description = description;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

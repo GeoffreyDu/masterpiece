@@ -12,7 +12,7 @@ import java.time.LocalTime;
 
 public class EventDto {
 
-    @NotNull
+    @NotBlank
     @Size(min = 3, max = 255)
     private String title;
 

@@ -2,8 +2,10 @@ package fr.formation.masterpieceback.controllers;
 
 import fr.formation.masterpieceback.dtos.EventDto;
 import fr.formation.masterpieceback.dtos.EventViewDto;
-import fr.formation.masterpieceback.entities.Event;
+
 import fr.formation.masterpieceback.services.EventService;
+import org.springframework.data.domain.Page;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,5 +38,9 @@ public class EventController {
         return eventService.get(id);
     }
 
-
+    @GetMapping("/user/{userId}")
+    protected Page<EventViewDto> getAllEventByUserId(@PathVariable("userId") Long userId, @RequestParam("p") int page,
+                                         @RequestParam("s") int size) {
+        return eventService.getAllEventByUser(userId, page, size);
+    }
 }
