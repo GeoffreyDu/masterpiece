@@ -1,7 +1,7 @@
 import React from 'react';
 
 const footerStyle = {
-    position: 'relative',
+    position: 'absolute',
     top: '95vh',
     textAlign: 'center',
     bottom: 0,

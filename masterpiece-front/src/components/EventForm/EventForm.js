@@ -1,5 +1,5 @@
 import React from "react";
-import { withFormik} from "formik";
+import { withFormik } from "formik";
 import * as Yup from "yup";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -12,9 +12,9 @@ import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import axios from "axios";
-import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar"
-import labels from "../../config/config"
-import errorType from "../../error-type/errorType"
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
+import labels from "../../config/config";
+import errorType from "../../error-type/errorType";
 
 const useStyles = makeStyles(theme => ({
   eventNameInput: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
       marginRight: theme.spacing(1),
   }
 }));
-
+const accessToken = localStorage.getItem("access_token");
 const AddEvent = props =>{
 
   const {
@@ -55,7 +55,7 @@ const AddEvent = props =>{
   const handleClickOpen = () => {
     setSubmitting(false);
     setOpen(true);
-};
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -127,9 +127,9 @@ const AddEvent = props =>{
                   </form>
               </DialogContent>
             </Dialog>
-            {status ? <ErrorSnackbar message={status.message} severity={status.severity}/>: null}
+            {status ? <ErrorSnackbar messages={status.messages} severity={status.severity}/>: null}
           </div>   
-  );
+        );
 };
 
 const EventForm = withFormik({
@@ -143,7 +143,7 @@ const EventForm = withFormik({
       title: title || "",
       description: description || "",
       dateTime: dateTime || new Date(new Date().setHours(new Date().getHours() + 3)).toISOString().substr(0, 16),
-      userId: userId || 1,
+      userId: userId || localStorage.getItem('user_id'),
     };
   },
 
@@ -161,29 +161,27 @@ const EventForm = withFormik({
         .required("Une date est requise") 
   }),
 
-  handleSubmit: (values, { resetForm, setStatus, setSubmitting }) => {
+  handleSubmit: (values, { resetForm, setStatus, setSubmitting, props }) => {
     const event = JSON.stringify(values);
-    let status;
-    axios.post("http://localhost:8081/events", event, {headers:{"Content-Type":"application/json"}})
+    axios.post("http://localhost:8081/api/events", event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
     .then(response => {
       console.log(response)
       setStatus({
-        message: "Evénement créé avec succès",
+        messages: ["Evénement créé avec succès"],
         severity: "success"
-      })
+      });
+      props.updateEventList(response)
     })
     .catch(error => {
       let errMessage = errorType(error.response)
       console.log(error.response)
       setStatus({
-        message: errMessage,
-        severity: "warning"
+        messages: errMessage,
+        severity: "error"
       })
-      }
-    )
+    })
     resetForm()
     setSubmitting(true)
-    setStatus(status)
   }
 })(AddEvent);
 

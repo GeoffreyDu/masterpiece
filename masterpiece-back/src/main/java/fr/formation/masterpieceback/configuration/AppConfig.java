@@ -9,12 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 public class AppConfig {
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public ModelMapper mapper() {
@@ -28,4 +25,15 @@ public class AppConfig {
         mapper.addMappings(eventPropertyMap);
         return mapper;
     }
+
+    /**
+     * The password encoder bean for the application. Used for client and users.
+     *
+     * @return a password encoder
+     */
+    @Bean
+    protected PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

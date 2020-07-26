@@ -4,6 +4,7 @@ let labels = new LocalizedStrings({
  fr:{
    slogan:"Ecrivez votre histoire de famille",
    email:"Mail",
+   username:"Pseudo",
    password:"Mot de passe",
    confirPassword:"Confirmation mot de passe",
    title:"Titre",
@@ -14,6 +15,7 @@ let labels = new LocalizedStrings({
  en:{
     slogan:"Write the story of your family",
     email:"Mail",
+    username:"Username",
     password:"Password",
     confirPassword:"Confirm password",
     title:"Title",
@@ -22,4 +24,4 @@ let labels = new LocalizedStrings({
  }
 });
 
-export default labels
+export default labels;

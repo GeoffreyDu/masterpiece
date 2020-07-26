@@ -16,9 +16,12 @@ public class User {
     private String mail;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
             foreignKey = @ForeignKey(name = "users_roles_user_id_FK"),
@@ -52,6 +55,10 @@ public class User {
     public void setMail(String mail) {
         this.mail = mail;
     }
+
+    public String getUsername() { return username;}
+
+    public void setUsername(String username) { this.username = username;}
 
     public String getPassword() {
         return password;

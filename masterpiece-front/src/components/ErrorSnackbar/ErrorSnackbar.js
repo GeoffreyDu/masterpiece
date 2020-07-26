@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ErrorSnackbars({ message, severity }) {
+export default function ErrorSnackbars({ messages, severity }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -35,7 +35,9 @@ export default function ErrorSnackbars({ message, severity }) {
     <div className={classes.root}>
       <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity}>
-          {message}
+          {messages.map((message, index)=>{
+            return (<span key={index}>- {message}</span>);
+          })}
         </Alert>
       </Snackbar>
     </div>

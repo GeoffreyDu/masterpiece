@@ -4,18 +4,23 @@ import fr.formation.masterpieceback.constraints.UniqueMail;
 import fr.formation.masterpieceback.constraints.ValidPassword;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserDto {
     @Email
-    @NotNull
+    @NotBlank
     @Size(max=255)
     @UniqueMail
     private String mail;
 
-    @NotNull
-    @Size(min = 8)
+    @NotBlank
+    @Size(min = 3, max = 100)
+    private String username;
+
+    @NotBlank
+    @Size(min = 8, max = 20)
     @ValidPassword
     private String password;
 
@@ -29,6 +34,10 @@ public class UserDto {
     public void setMail(String mail) {
         this.mail = mail;
     }
+
+    public String getUsername() {return username;}
+
+    public void setUsername(String username) {this.username = username;}
 
     public String getPassword() {
         return password;

@@ -1,18 +1,17 @@
 package fr.formation.masterpieceback.services;
 
+import fr.formation.masterpieceback.configuration.CustomUserDetails;
 import fr.formation.masterpieceback.dtos.UserDto;
-import fr.formation.masterpieceback.entities.Role;
+import fr.formation.masterpieceback.dtos.UserViewDto;
 import fr.formation.masterpieceback.entities.User;
 import fr.formation.masterpieceback.repositories.RoleRepository;
 import fr.formation.masterpieceback.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -53,6 +52,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean uniqueMail(String mail) {
         return mail != null && !userRepo.existsByMail(mail);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String mail)
+            throws UsernameNotFoundException {
+        UserViewDto user = userRepo.findByMail(mail)
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        "no user found with mail: " + mail));
+        return new CustomUserDetails(user);
     }
 
 }

@@ -1,21 +1,28 @@
+import labelErrors from "../config/labelErrors";
+
 const errorType = (error)=>{
-    let msg;
-    if (error.data.status === 400) {
-        msg = error.data.errors[0].defaultMessage;
+    const status = error.status;
+    console.log(status)
+    let messageContainer = [];
+    if (status === 400) {
+        error.data.forEach(msg => {
+            messageContainer.push( `${msg.attribute} : ${labelErrors[msg.code]}`)  
+        });
     } 
-    else if(error.data.status === 401) {
-        msg = "Une authentification est nécessaire pour accéder à la ressource";  
+    else if(status === 401) {
+        messageContainer.push(labelErrors.Unauthorize)  
     }
-    else if(error.data.status === 404) {
-        msg = "Ressource non trouvée";  
+    else if(status === 404) {
+        messageContainer.push(labelErrors.NotFound) 
     }
-    else if(error.data.status === 500) {
-        msg = "Erreur interne du serveur";  
+    else if(status === 500) {
+        messageContainer.push(labelErrors.ServerError)  
     }
     else{
-        msg = `Erreur: ${error.data.error}`;   
+        messageContainer.push(labelErrors.General)   
     }
-    return msg
+    console.log(messageContainer)
+    return messageContainer;
 }
 
 export default errorType

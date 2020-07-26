@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import SignupForm from './components/Signup/SignupForm';
 import SigninForm from './components/Signin/SigninForm';
 import Footer from './components/Footer/Footer';
+import EventContainer from './components/EventContainer/EventContainer';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 const Root = ()=>{
@@ -19,6 +20,7 @@ const Root = ()=>{
               <Route exact path='/' component={App}/>
               <Route exact path='/inscription' component={SignupForm}/>
               <Route exact path='/connexion' component={SigninForm}/>
+              <Route exact path='/evenements' component={EventContainer}/>
             </Switch>
           <Footer/>
         </div>

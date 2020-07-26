@@ -18,6 +18,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import {Link} from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -55,13 +56,28 @@ const useStyles = makeStyles(theme => ({
 
 function NavBar(props) {
   const { container } = props;
+  let history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  let navLinks = []
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user_id");
+    history.push("/");
+  }
+  let navNotLogged = [
+    {text:'Inscription', path:'/inscription', icon: <AddCircleIcon/>} ,
+    {text: 'Connexion', path:'/connexion', icon: <PlayCircleFilledIcon/>},
+    {text:'Aide', path:'/', icon: <HelpIcon/>}
+  ]
+  let navLogged = [{text: 'Evénements', path:'/evenements', icon: <HelpIcon/>}, {text: 'Déconnexion', path:{logout}, icon: <HelpIcon/>}, {text:'Aide', path:'/', icon: <HelpIcon/>}]
+  let accessToken = localStorage.getItem('access_token');
+  accessToken != null ? navLinks = navLogged : navLinks = navNotLogged;
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
 
   const drawer = (
     <div>
@@ -72,15 +88,24 @@ function NavBar(props) {
       </div>
       <Divider />
       <List>
-        {[
-            {text:'Inscription', icon: <AddCircleIcon/>} ,
-            {text: 'Connexion', icon: <PlayCircleFilledIcon/>},
-            {text:'Aide', icon: <HelpIcon/>}].map(({text, icon}) => (
-            <ListItem button key={text}>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <Link className='linkDrawer' to={`/${text}`}><ListItemText primary={text} /></Link>
-            </ListItem>
-        ))}
+        {navLinks.map(({text, path, icon}, index) => {
+                  if (text === 'Déconnexion'){
+                    return (
+                      <ListItem onClick={logout} key={index} button>
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                      )
+                  }
+                  else{
+                    return (
+                      <ListItem button key={index}>
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <Link className='linkDrawer' to={path}><ListItemText primary={text} /></Link>
+                      </ListItem>
+                      )
+                  }
+                })}
       </List>
     </div>
   );
@@ -105,11 +130,22 @@ function NavBar(props) {
             <Hidden smDown>
                 <div className="rightBar" ></div>
                 <List className='flex'>
-                {['Inscription', 'Connexion', 'Aide'].map((text) => (
-                <ListItem button key={text}>
-                    <Link className='link' to={`/${text}`}><ListItemText primary={text} /></Link>
-                </ListItem>
-                ))}
+                {navLinks.map(({text, path}, index) => {
+                  if (text === 'Déconnexion'){
+                    return (
+                      <ListItem onClick={logout} key={index} button>
+                          <ListItemText primary={text} />
+                      </ListItem>
+                      )
+                  }
+                  else{
+                    return (
+                      <ListItem button key={index}>
+                          <Link className='link' to={path}><ListItemText primary={text} /></Link>
+                      </ListItem>
+                      )
+                  }
+                })}
                 </List>
             </Hidden>
         </Toolbar>
