@@ -143,7 +143,7 @@ const SignupForm = withFormik({
     username: Yup.string()
       .min(3)
       .max(100)
-      .required("Le mail est requis"),
+      .required("Le pseudo est requis"),
     password: Yup.string()
       .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})/, labelErrors.ValidPassword)
       .required("Entrez votre mot de passe"),
@@ -152,7 +152,7 @@ const SignupForm = withFormik({
     .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas")
   }),
 
-  handleSubmit: (values, { props, resetForm, setStatus }) => {
+  handleSubmit: (values, { props, resetForm }) => {
     delete values.confirmPassword
     const { history } = props;
     const user = JSON.stringify(values);
@@ -160,18 +160,13 @@ const SignupForm = withFormik({
     axios.post("http://localhost:8081/api/users", user, {headers:{"Content-Type":"application/json"}})
     .then(response => {
       console.log(response)
-      setStatus({
-        messages: ["Compte créé avec succès"],
-        severity: "success"
-      }); history.push("/connexion")
+      props.updateOpen(["Compte créé avec succès"], "success")
+      history.push("/connexion")
     })
     .catch(error => {
       let errMessage = errorType(error.response)
       console.log(error.response)
-      setStatus({
-        messages: errMessage,
-        severity: "error"
-      })
+      props.updateOpen([errMessage], "error")
       }
     )
     resetForm()

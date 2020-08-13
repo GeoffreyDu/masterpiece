@@ -2,7 +2,7 @@ import LocalizedStrings from 'react-localization';
  
 let labels = new LocalizedStrings({
  fr:{
-   slogan:"Ecrivez votre histoire de famille",
+   slogan:"Il était une fois, une famille",
    email:"Mail",
    username:"Pseudo",
    password:"Mot de passe",
@@ -13,7 +13,7 @@ let labels = new LocalizedStrings({
    description:"Description"
  },
  en:{
-    slogan:"Write the story of your family",
+    slogan:"Once upon a time, a family",
     email:"Mail",
     username:"Username",
     password:"Password",

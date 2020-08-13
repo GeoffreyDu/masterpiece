@@ -10,12 +10,10 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import labels from "../../config/config";
 import { Link } from "@material-ui/core";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
-import qs from 'qs';
-import errorType from "../../error-type/errorType";
 import labelErrors from "../../config/labelErrors";
 import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
+import { login } from "../../config/AsyncFunc"
 
 const cardStyle = {
   marginBottom: "15px"
@@ -111,46 +109,22 @@ const SigninForm = withFormik({
       .required("Entrez votre mot de passe"),
   }),
 
-  handleSubmit: (values, {props, resetForm, setStatus}) => {
+  handleSubmit: (values, {props, resetForm}) => {
     const { history } = props;
     console.log(values)
     var mail = values.mail;
     var password = values.password;
-    var grantType = 'password';
-    var clientId = 'masterpiece-client-id'
-    var data = qs.stringify({
-    'grant_type': 'password',
-    'username': mail,
-    'password': password,
-    'client_id': 'masterpiece-client-id' 
-    });
-    var config = {
-    method: 'post',
-    url: `http://localhost:8081/oauth/token?grant_type=${grantType}&username=${mail}&password=${password}&client_id=${clientId}`,
-    headers: { 
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data : data
-    };
-    axios(config)
-    .then(function (response) {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("user_id", response.data.userId);
-      console.log(response.data);
-      setStatus({
-        messages: ["Connexion réussie"],
-        severity: "success"
-      });
-      history.push("/evenements");
+
+    login(mail, password).then(logged => {
+      if (logged === true) {
+          resetForm();
+          props.updateOpen(["Connexion réussie"], "success")
+          history.push("/evenements");
+      }
+      else {
+        props.updateOpen([logged], "error")
+      }
     })
-    .catch(function (error) {
-      let errMessage = errorType(error)
-      console.log(error)
-      setStatus({
-        messages: errMessage,
-        severity: "error"
-      })
-    });
   }
 })(form);
 

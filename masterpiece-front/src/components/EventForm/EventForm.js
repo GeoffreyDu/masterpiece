@@ -15,6 +15,7 @@ import axios from "axios";
 import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 import labels from "../../config/config";
 import errorType from "../../error-type/errorType";
+import getWithExpiry from "../../config/getWithExpiry";
 
 const useStyles = makeStyles(theme => ({
   eventNameInput: {
@@ -34,7 +35,8 @@ const useStyles = makeStyles(theme => ({
       marginRight: theme.spacing(1),
   }
 }));
-const accessToken = localStorage.getItem("access_token");
+// const accessToken = localStorage.getItem("access_token");
+const accessToken = getWithExpiry("access_token");
 const AddEvent = props =>{
 
   const {
@@ -161,24 +163,18 @@ const EventForm = withFormik({
         .required("Une date est requise") 
   }),
 
-  handleSubmit: (values, { resetForm, setStatus, setSubmitting, props }) => {
+  handleSubmit: (values, { resetForm, setSubmitting, props }) => {
     const event = JSON.stringify(values);
     axios.post("http://localhost:8081/api/events", event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
     .then(response => {
       console.log(response)
-      setStatus({
-        messages: ["Evénement créé avec succès"],
-        severity: "success"
-      });
-      props.updateEventList(response)
+      props.updateOpen(["Evénement créé avec succès"], "success")
+      props.updateEventList(response.data)
     })
     .catch(error => {
       let errMessage = errorType(error.response)
       console.log(error.response)
-      setStatus({
-        messages: errMessage,
-        severity: "error"
-      })
+      props.updateOpen([errMessage], "error")
     })
     resetForm()
     setSubmitting(true)

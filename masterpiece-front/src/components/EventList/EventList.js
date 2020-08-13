@@ -1,31 +1,58 @@
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import Button from "@material-ui/core/Button"
-import { ListItemText } from '@material-ui/core';
-import labels from "../../config/config";
+import { Grid, Container, makeStyles, Typography, Button } from '@material-ui/core';
+import Event from "../Event/Event";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+
+const useStyles = makeStyles((theme) => ({
+    cardGrid: {
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(12),
+    },
+    heroContent: {
+        padding: theme.spacing(8, 0, 0),
+      },
+    buttons:{
+        display:"flex",
+        justifyContent:"space-around",
+        marginTop:"40px"
+    }
+  }));
 
 const EventList = (props) => {
     
-    
+      const classes = useStyles();
+      console.log(props.events)
     return (
-        <ListItem>
-            {props.events.length > 0 ? (
+        <Container className={classes.cardGrid} maxWidth="md">
+            <Grid container spacing={4}>
+                <div className={classes.heroContent}>
+                    <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
+                    Mes événements
+                    </Typography>
+                    <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                        Bienvenue, ici vous pouvez gérer vos événements. Vous avez la possibilité de consulter la liste de vos événements, ainsi que d'en ajouter de nouveaux.
+                    </Typography>
+                </div>
+            {!props.events ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (
                 <>
                     {props.events.map((event, index) => (
-                <ListItemText className="d-flex" key={index}>
-                    <strong>{labels.title + `: ${event.title}`}</strong>
-                    <div className="ml-auto">
-                        {/* <Link className="btn btn-warning mr-1" to={`/edit/${event.id}`}>Edit</Link> */}
-                        <strong>Description: {event.description}</strong>
-                    <strong>Date: {event.date}</strong>
-                        <Button color="primary">Modifier</Button>
-                        <Button color="secondary">Effacer</Button>
-                    </div>
-                </ListItemText>
+                    <Grid item key={index} xs={12} sm={6} md={4}>
+                        <Event title={event.title} text={event.description} datetime={event.dateTime} index={index} eventDelete={()=>props.eventDelete}/>
+                    </Grid>
                     ))}
                 </>
-            ): <h4 className="text-center">Aucun événements</h4>}  
-        </ListItem>
+            )}
+            </Grid>
+            <div className={classes.buttons}>
+                <Button variant="contained" size="small" color="primary" onClick={()=>props.previousPage()}>
+                    <NavigateBeforeIcon/>
+                </Button>
+                <Button variant="contained" size="small" color="primary" onClick={()=>props.nextPage()}>
+                    <NavigateNextIcon/>
+                </Button>
+            </div>
+        </Container>
     ) 
 }
 

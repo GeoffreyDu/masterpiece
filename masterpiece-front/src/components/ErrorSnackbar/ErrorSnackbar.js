@@ -16,20 +16,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ErrorSnackbars({ messages, severity }) {
+export default function ErrorSnackbars({ messages, severity, open, handleClose, updateOpen }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  // const [open, setOpen] = React.useState(true);
 
   // const handleClick = () => {
   //   setOpen(true);
   // };
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-  };
+  // const handleClose = (reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   setOpen(false);
+  // };
 
   return (
     <div className={classes.root}>

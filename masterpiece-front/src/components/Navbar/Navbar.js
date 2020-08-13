@@ -62,8 +62,7 @@ function NavBar(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let navLinks = []
   const logout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("user_id");
+    localStorage.clear();
     history.push("/");
   }
   let navNotLogged = [
