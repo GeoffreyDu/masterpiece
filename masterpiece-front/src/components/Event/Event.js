@@ -21,14 +21,14 @@ const Event = ({index, title, datetime, text, eventDelete}) => {
     return(
         <Card className={classes.root}>
             <CardContent>
-                <Typography color="primary" variant="h5" component="h2">
+                <Typography color="primary" variant="h5" component="h5">
                     {title}
                 </Typography>
                 <Typography color="textPrimary" variant="body2" component="p">
-                    Date : {`${datetime.substring(0, 10)} à ${datetime.substring(11, 16)}`}
+                    {`${datetime.substring(0, 10)} à ${datetime.substring(11, 16)}`}
                 </Typography>
                 <Typography color="textPrimary" variant="body2" component="p">
-                    Description : {text}
+                    {text}
                 </Typography>
             </CardContent>
             <CardActions>

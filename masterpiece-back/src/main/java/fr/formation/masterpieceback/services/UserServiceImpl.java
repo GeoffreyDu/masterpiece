@@ -4,7 +4,6 @@ import fr.formation.masterpieceback.configuration.CustomUserDetails;
 import fr.formation.masterpieceback.dtos.UserDto;
 import fr.formation.masterpieceback.dtos.UserViewDto;
 import fr.formation.masterpieceback.entities.User;
-import fr.formation.masterpieceback.repositories.RoleRepository;
 import fr.formation.masterpieceback.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,13 +15,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepo;
-    private final RoleRepository roleRepo;
     private final ModelMapper mapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepo, RoleRepository roleRepo, ModelMapper mapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepo, ModelMapper mapper, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
         this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
     }

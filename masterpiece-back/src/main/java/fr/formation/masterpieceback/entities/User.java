@@ -21,19 +21,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", nullable = false),
-            foreignKey = @ForeignKey(name = "users_roles_user_id_FK"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false),
-            inverseForeignKey = @ForeignKey(name = "users_roles_role_id_FK"),
-            indexes = {
-                @Index(name = "users_roles_user_id_IDX", columnList = "user_id"),
-                @Index(name = "users_roles_role_id_IDX", columnList = "role_id")
-            }
-    )
-    private Set<Role> roles;
-
     @Column(nullable = false)
     private boolean enabled = true;
 
@@ -66,14 +53,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public boolean isEnabled() {

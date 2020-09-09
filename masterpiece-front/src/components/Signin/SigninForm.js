@@ -13,7 +13,7 @@ import { Link } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import labelErrors from "../../config/labelErrors";
 import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
-import { login } from "../../config/AsyncFunc"
+import { login } from "../../config/AsyncFunc";
 
 const cardStyle = {
   marginBottom: "15px"
@@ -109,7 +109,7 @@ const SigninForm = withFormik({
       .required("Entrez votre mot de passe"),
   }),
 
-  handleSubmit: (values, {props, resetForm}) => {
+  handleSubmit: (values, {props, resetForm, setStatus}) => {
     const { history } = props;
     console.log(values)
     var mail = values.mail;
@@ -118,11 +118,17 @@ const SigninForm = withFormik({
     login(mail, password).then(logged => {
       if (logged === true) {
           resetForm();
-          props.updateOpen(["Connexion réussie"], "success")
+          setStatus({
+            messages: ["Connexion réussie"],
+            severity: "success"
+          });
           history.push("/evenements");
       }
       else {
-        props.updateOpen([logged], "error")
+        setStatus({
+          messages: [logged],
+          severity: "error"
+        });
       }
     })
   }

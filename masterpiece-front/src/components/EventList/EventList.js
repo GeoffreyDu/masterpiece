@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EventList = (props) => {
     
-      const classes = useStyles();
-      console.log(props.events)
+    const classes = useStyles();
     return (
         <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>

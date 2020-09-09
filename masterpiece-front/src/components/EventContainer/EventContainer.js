@@ -17,7 +17,6 @@ class EventContainer extends Component {
     }
 
     componentDidMount(){
-        this._isMounted = true;
         // let accessToken = localStorage.getItem('access_token');
         let userId = localStorage.getItem('user_id');
         axios.get(`http://localhost:8081/api/events/user/${userId}?p=0&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
@@ -35,10 +34,6 @@ class EventContainer extends Component {
         this.props.updateOpen([errMessage], "error")
         })
     }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-      }
 
     updateEventList = event =>{
         // let accessToken = localStorage.getItem('access_token');
