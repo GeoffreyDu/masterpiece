@@ -19,3 +19,15 @@
 .rightBar{
   flex-grow: 1;
 }
+
+.logocontainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+  border-radius: 10px;
+}

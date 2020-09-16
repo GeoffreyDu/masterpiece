@@ -19,6 +19,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import {Link} from "react-router-dom";
 import { useHistory } from 'react-router-dom';
+import Logo from "../../Assets/logo.png";
+import LogoBlack from "../../Assets/logo_black.png";
 
 const drawerWidth = 240;
 
@@ -82,7 +84,7 @@ function NavBar(props) {
     <div>
       <div className={`${classes.toolbar} flex`}>
         <Typography className='logoTypo' variant='h6' noWrap>
-          <Link className='linkDrawer' to={'/'}>Logo</Link>
+          <Link className='linkDrawer logoconatainer' to={'/'}><img className="logo" src={LogoBlack} alt="logo"/></Link>
         </Typography>
       </div>
       <Divider />
@@ -124,7 +126,7 @@ function NavBar(props) {
             <MenuIcon />
             </IconButton>
             <Typography variant='h6' noWrap>
-                <Link className='link' to={'/'}>Logo</Link>
+                <Link className='link logocontainer' to={'/'}><img className="logo" src={Logo} alt="logo"/></Link>
             </Typography>
             <Hidden smDown>
                 <div className="rightBar" ></div>

@@ -8,8 +8,6 @@ import getWithExpiry from "../../config/getWithExpiry";
 import IsLogged from "../../config/IsLogged";
 import { withRouter } from "react-router-dom";
 
-let accessToken = getWithExpiry("access_token");
-
 class EventContainer extends Component {
 
     state = {
@@ -17,7 +15,7 @@ class EventContainer extends Component {
     }
 
     componentDidMount(){
-        // let accessToken = localStorage.getItem('access_token');
+        let accessToken = getWithExpiry("access_token");
         let userId = localStorage.getItem('user_id');
         axios.get(`http://localhost:8081/api/events/user/${userId}?p=0&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
@@ -36,22 +34,9 @@ class EventContainer extends Component {
     }
 
     updateEventList = event =>{
-        // let accessToken = localStorage.getItem('access_token');
-        let userId = localStorage.getItem('user_id');
-        axios.get(`http://localhost:8081/api/events/user/${userId}?p=0&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
-        .then(response => {
-            console.log(response)
             this.setState({
-                events: response.data.content,
-                nbPages: response.data.totalPages,
-                currentPage: response.data.pageable.pageNumber
+                events: [...this.state.events, event]
             })
-        })
-        .catch(error => {
-        let errMessage = errorType(error.response)
-        console.log(errMessage)
-        this.props.updateOpen([errMessage], "error")
-        })
     }
 
     eventDelete = index =>{
@@ -64,7 +49,7 @@ class EventContainer extends Component {
         if(currentPage < totalPages-1){
             currentPage++
         }
-        // let accessToken = localStorage.getItem('access_token');
+        let accessToken = getWithExpiry("access_token");
         let userId = localStorage.getItem('user_id');
         axios.get(`http://localhost:8081/api/events/user/${userId}?p=${currentPage}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
@@ -87,7 +72,7 @@ class EventContainer extends Component {
         if (currentPage > 0) {
             currentPage--    
         }
-        // let accessToken = localStorage.getItem('access_token');
+        let accessToken = getWithExpiry("access_token");
         let userId = localStorage.getItem('user_id');
         axios.get(`http://localhost:8081/api/events/user/${userId}?p=${currentPage}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {

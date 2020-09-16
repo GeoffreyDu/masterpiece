@@ -31,14 +31,14 @@ const Event = ({index, title, datetime, text, eventDelete}) => {
                     {text}
                 </Typography>
             </CardContent>
-            <CardActions>
+            {/* <CardActions>
                 <Button size="small" color="primary">
                     Modifier
                 </Button>
                 <Button size="small" color="secondary" onClick={()=>eventDelete(index)}>
                     Supprimer
                 </Button>
-            </CardActions>
+            </CardActions> */}
         </Card>
     )
 }

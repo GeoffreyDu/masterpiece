@@ -1,4 +1,5 @@
 import React from 'react';
+import './footer.css';
 
 const footerStyle = {
     position: 'absolute',
@@ -11,7 +12,7 @@ const footerStyle = {
     color: '#B3B3B3'
 }
 
-const Footer = ()=> <div><p style={footerStyle}>Copyright 2019 - {new Date().getFullYear()} - All rights reserved</p></div>
+const Footer = ()=> <div className="footer"><p style={footerStyle}>Copyright 2019 - {new Date().getFullYear()} - All rights reserved</p></div>
     
 
 

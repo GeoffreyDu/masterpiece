@@ -5,9 +5,14 @@ const errorType = (error)=>{
     console.log(status)
     let messageContainer = [];
     if (status === 400) {
-        error.data.forEach(msg => {
-            messageContainer.push( `${msg.attribute} : ${labelErrors[msg.code]}`)  
-        });
+        if (Array.isArray(error.data)){
+            error.data.forEach(msg => {
+                messageContainer.push( `${msg.attribute} : ${labelErrors[msg.code]}`)  
+            });
+        }
+        else{
+            messageContainer.push(error.data.error_description);
+        }
     } 
     else if(status === 401) {
         messageContainer.push(labelErrors.Unauthorize)  

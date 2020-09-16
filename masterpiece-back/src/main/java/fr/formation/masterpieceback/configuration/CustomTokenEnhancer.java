@@ -22,7 +22,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         CustomUserDetails user = (CustomUserDetails) authentication
                 .getPrincipal();
         additionalInfo.put(USER_ID_KEY, user.getId());
-        additionalInfo.put(USER_NAME_KEY, user.getUsername());
+        additionalInfo.put(USER_NAME_KEY, user.getPseudo());
         ((DefaultOAuth2AccessToken) accessToken)
                 .setAdditionalInformation(additionalInfo);
         return accessToken;

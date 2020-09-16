@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
         marginTop:"40px"
     }
   }));
-
-const EventList = (props) => {
+  const EventList = (props) => {
+    let username = localStorage.getItem('username');
     
     const classes = useStyles();
     return (
@@ -30,7 +30,7 @@ const EventList = (props) => {
                     Mes événements
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        Bienvenue, ici vous pouvez gérer vos événements. Vous avez la possibilité de consulter la liste de vos événements, ainsi que d'en ajouter de nouveaux.
+                        Bienvenue <span>{username}</span>, ici vous pouvez gérer vos événements. Vous avez la possibilité de consulter la liste de vos événements, ainsi que d'en ajouter de nouveaux.
                     </Typography>
                 </div>
             {!props.events ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (

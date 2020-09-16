@@ -163,26 +163,18 @@ const EventForm = withFormik({
         .required("Une date est requise") 
   }),
 
-  handleSubmit: (values, { resetForm, setSubmitting, setStatus, props}) => {
+  handleSubmit: (values, { resetForm, setSubmitting, props}) => {
     const event = JSON.stringify(values);
     axios.post("http://localhost:8081/api/events", event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
     .then(response => {
       console.log(response)
-      // props.updateOpen(["Evénement créé avec succès"], "success")
-      setStatus({
-        messages: ["Evénement créé avec succès"],
-        severity: "success"
-      });
+      props.updateOpen(["Evénement créé avec succès"], "success")
       props.updateEventList(response.data)
     })
     .catch(error => {
       let errMessage = errorType(error.response)
       console.log(error.response)
-      setStatus({
-        messages: [errMessage],
-        severity: "error"
-      })
-      // props.updateOpen([errMessage], "error")
+      props.updateOpen([errMessage], "error")
     })
     resetForm()
     setSubmitting(true)

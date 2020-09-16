@@ -109,7 +109,7 @@ const SigninForm = withFormik({
       .required("Entrez votre mot de passe"),
   }),
 
-  handleSubmit: (values, {props, resetForm, setStatus}) => {
+  handleSubmit: (values, {props, resetForm}) => {
     const { history } = props;
     console.log(values)
     var mail = values.mail;
@@ -118,17 +118,14 @@ const SigninForm = withFormik({
     login(mail, password).then(logged => {
       if (logged === true) {
           resetForm();
-          setStatus({
-            messages: ["Connexion réussie"],
-            severity: "success"
+          props.updateOpen(["Connexion réussie"], "success")
+          history.push({
+            pathname: "/evenements",
+            state: {events: []}
           });
-          history.push("/evenements");
       }
       else {
-        setStatus({
-          messages: [logged],
-          severity: "error"
-        });
+        props.updateOpen([logged], "error")
       }
     })
   }
