@@ -1,6 +1,7 @@
 package fr.formation.masterpieceback.controllers;
 
 import fr.formation.masterpieceback.dtos.EventDto;
+import fr.formation.masterpieceback.dtos.EventDtoUpdate;
 import fr.formation.masterpieceback.dtos.EventViewDto;
 
 import fr.formation.masterpieceback.services.EventService;
@@ -26,7 +27,7 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    protected void update(@PathVariable("id") Long id, @Valid @RequestBody EventDto dto){
+    protected void update(@PathVariable("id") Long id, @Valid @RequestBody EventDtoUpdate dto){
         eventService.update(id, dto);
     }
 

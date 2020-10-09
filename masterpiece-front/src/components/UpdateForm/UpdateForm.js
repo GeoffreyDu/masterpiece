@@ -8,14 +8,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Fab from '@material-ui/core/Fab';
+// import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import axios from "axios";
 import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 import labels from "../../config/config";
-import errorType from "../../error-type/errorType";
-import getWithExpiry from "../../config/getWithExpiry";
 
 const useStyles = makeStyles(theme => ({
   eventNameInput: {
@@ -36,39 +33,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddEvent = props =>{
+const UpdateEvent = props =>{
 
   const {
     values,
     touched,
     errors,
-    isSubmitting,
     handleChange,
     handleBlur,
     handleSubmit,
     status,
     setFieldValue,
-    setSubmitting
+    closeUpdateForm,
+    updateState,
   } = props;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setSubmitting(false);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
           <div>
-            <Fab variant="extended" color="primary" onClick={handleClickOpen} className={classes.fab}>
-              Créer un événement
-            </Fab>
-            <Dialog open={isSubmitting ? false : open} onClose={handleClose} aria-labelledby="form-dialog-title" disableBackdropClick>
-              <DialogTitle id="form-dialog-title"><span style={{color:'black'}}>Création d'évenement</span></DialogTitle>
+            <Dialog open={updateState.open} onClose={closeUpdateForm} aria-labelledby="form-dialog-title" disableBackdropClick>
+              <DialogTitle id="form-dialog-title"><span style={{color:'black'}}>Modification d'évenement</span></DialogTitle>
               <DialogContent>
                 <DialogContentText>
                 Complétez les détails de votre événement, en entrant un titre, une description et une date. Ensuite validez votre choix.
@@ -118,10 +102,10 @@ const AddEvent = props =>{
                     />
                     </Grid>
                     <DialogActions>
-                      <Button onClick={handleClose} color="primary">
+                      <Button onClick={closeUpdateForm} color="primary">
                         Annuler
                       </Button>
-                      <Button type="submit" color="primary" disabled={isSubmitting}>
+                      <Button type="submit" color="primary">
                         Créer
                       </Button>
                     </DialogActions>    
@@ -133,7 +117,7 @@ const AddEvent = props =>{
         );
 };
 
-const EventForm = withFormik({
+const UpdateForm = withFormik({
   mapPropsToValues: ({
     title,
     description,
@@ -162,27 +146,12 @@ const EventForm = withFormik({
         .required("Une date est requise") 
   }),
 
-  handleSubmit: (values, { resetForm, setSubmitting, props}) => {
+  handleSubmit:  (values, { resetForm, props}) => {
     const event = JSON.stringify(values);
-    const accessToken = getWithExpiry("access_token");
-    axios.post("http://localhost:8081/api/events", event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
-    .then(response => {
-      console.log(response)
-
-      // Show Notification
-      props.updateOpen(["Evénement créé avec succès"], "success")
-
-      // Update current event list page
-      props.updateEventList(props.currentPage)
-    })
-    .catch(error => {
-      const errMessage = errorType(error.response)
-      console.log(error.response)
-      props.updateOpen([errMessage], "error")
-    })
+    props.eventUpdate(event, props.updateState.id)
     resetForm()
-    setSubmitting(true)
+    props.closeUpdateForm()
   }
-})(AddEvent);
+})(UpdateEvent);
 
-export default EventForm;
+export default UpdateForm;

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
       }
 });
 
-const Event = ({index, title, datetime, text, eventDelete}) => {
+const Event = ({id, title, datetime, text, eventDelete, openUpdateForm}) => {
     const classes = useStyles()
     return(
         <Card className={classes.root}>
@@ -31,14 +31,14 @@ const Event = ({index, title, datetime, text, eventDelete}) => {
                     {text}
                 </Typography>
             </CardContent>
-            {/* <CardActions>
-                <Button size="small" color="primary">
+            <CardActions>
+                <Button size="small" color="primary" onClick={()=>openUpdateForm()}>
                     Modifier
                 </Button>
-                <Button size="small" color="secondary" onClick={()=>eventDelete(index)}>
+                <Button size="small" color="secondary" onClick={(event, id)=>eventDelete(id)}>
                     Supprimer
                 </Button>
-            </CardActions> */}
+            </CardActions>
         </Card>
     )
 }

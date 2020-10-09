@@ -1,6 +1,7 @@
 package fr.formation.masterpieceback.services;
 
 import fr.formation.masterpieceback.dtos.EventDto;
+import fr.formation.masterpieceback.dtos.EventDtoUpdate;
 import fr.formation.masterpieceback.dtos.EventViewDto;
 import fr.formation.masterpieceback.entities.Event;
 import fr.formation.masterpieceback.entities.User;
@@ -40,12 +41,11 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public void update(Long id, EventDto dto){
+    public void update(Long id, EventDtoUpdate dto){
         Event event = eventRepo.findById(id).get();
         event.setTitle(dto.getTitle());
         event.setDateTime(dto.getDateTime());
         event.setDescription(dto.getDescription());
-        Long userId = dto.getUserId();
 
         eventRepo.save(event);
     }

@@ -15,25 +15,11 @@ import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 class App extends Component{
 
-  state = {
-    open: false,
-    messages: [],
-    severity: "info"
-  }
+  parentUpdateOpen = () => {}
 
-  handleClose = () => {
-      this.setState({
-        open: false
-      })
-  };
+  setUpdateOpen = childUpdateOpen => this.parentUpdateOpen = childUpdateOpen;
 
-  updateOpen = (messages, severity) => {
-    this.setState({
-      open: true,
-      messages: messages,
-      severity: severity
-    })
-  }
+  updateOpen = (messages, severity) => this.parentUpdateOpen(messages, severity);
 
   render(){
     return(
@@ -48,7 +34,7 @@ class App extends Component{
             </Switch>
           <Footer/>
         </div>
-        <ErrorSnackbars open={this.state.open} handleClose={this.handleClose} updateOpen={this.updateOpen} messages={this.state.messages} severity={this.state.severity}/>
+        <ErrorSnackbars setUpdateOpen={this.setUpdateOpen}/>
       </BrowserRouter>
     )
   }

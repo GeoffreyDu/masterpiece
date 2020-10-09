@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
                     Mes événements
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        Bienvenue <span>{username}</span>, ici vous pouvez gérer vos événements. Vous avez la possibilité de consulter la liste de vos événements, ainsi que d'en ajouter de nouveaux.
+                        Bienvenue <span style={{fontWeight:"bold", color:"black"}}>{username}</span>, ici vous pouvez gérer vos événements. Vous avez la possibilité de consulter la liste de vos événements, ainsi que d'en ajouter de nouveaux.
                     </Typography>
                 </div>
-            {!props.events ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (
+            {props.events.length < 1 ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (
                 <>
-                    {props.events.map((event, index) => (
-                    <Grid item key={index} xs={12} sm={6} md={4}>
-                        <Event title={event.title} text={event.description} datetime={event.dateTime} index={index} eventDelete={()=>props.eventDelete}/>
+                    {props.events.map((event) => (
+                    <Grid item key={event.id} xs={12} sm={6} md={4}>
+                        <Event title={event.title} text={event.description} datetime={event.dateTime} id={event.id} eventDelete={(id)=>props.eventDelete(event.id)} openUpdateForm={(id)=>props.openUpdateForm(event.id)}/>
                     </Grid>
                     ))}
                 </>

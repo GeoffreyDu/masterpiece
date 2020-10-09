@@ -3,7 +3,7 @@ import Home from './components/Home/Home';
 import ErrorSnackbars from './components/ErrorSnackbar/ErrorSnackbar'
 
 class App extends Component {
-
+  //uselesscomp
   state = {
     open: true,
     messages: [],
