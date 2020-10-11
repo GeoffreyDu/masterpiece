@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 const UpdateEvent = props =>{
 
   const {
+    values,
     touched,
     errors,
     handleChange,
@@ -62,7 +63,7 @@ const UpdateEvent = props =>{
                         label={labels.title}
                         className={classes.input}
                         type="text"
-                        value={updateState.title}
+                        value={values.title}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         helperText={touched.title ? errors.title : ""}
@@ -76,7 +77,7 @@ const UpdateEvent = props =>{
                         id="description"
                         label={labels.description}
                         type="text"
-                        value={updateState.description}
+                        value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         helperText={touched.description ? errors.description : ""}
@@ -88,7 +89,7 @@ const UpdateEvent = props =>{
                         id="dateTime"
                         label={labels.datetime}
                         type="datetime-local"
-                        value={updateState.date}
+                        value={values.dateTime}
                         onBlur={handleBlur}
                         onChange={e => setFieldValue("dateTime", e.target.value)}
                         InputLabelProps={{
@@ -117,17 +118,12 @@ const UpdateEvent = props =>{
 };
 
 const UpdateForm = withFormik({
-  mapPropsToValues: ({
-    title,
-    description,
-    dateTime,
-    userId
-  }) => {
+  enableReinitialize: true,
+  mapPropsToValues: (props) => {
     return {
-      title: title || "",
-      description: description || "",
-      dateTime: dateTime || new Date(new Date().setHours(new Date().getHours() + 3)).toISOString().substr(0, 16),
-      userId: userId || localStorage.getItem('user_id'),
+      title: props.updateState.title || "",
+      description: props.updateState.description || "",
+      dateTime: props.updateState.date || ""
     };
   },
 
