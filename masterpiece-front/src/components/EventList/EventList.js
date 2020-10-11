@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
                 <>
                     {props.events.map((event) => (
                     <Grid item key={event.id} xs={12} sm={6} md={4}>
-                        <Event title={event.title} text={event.description} datetime={event.dateTime} id={event.id} eventDelete={(id)=>props.eventDelete(event.id)} openUpdateForm={(id)=>props.openUpdateForm(event.id)}/>
+                        <Event title={event.title} text={event.description} datetime={event.dateTime} id={event.id} eventDelete={(id)=>props.eventDelete(event.id)} openUpdateForm={(id, title, date, description)=>props.openUpdateForm(event.id, event.title, event.dateTime, event.description)}/>
                     </Grid>
                     ))}
                 </>

@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
 const UpdateEvent = props =>{
 
   const {
-    values,
     touched,
     errors,
     handleChange,
@@ -63,7 +62,7 @@ const UpdateEvent = props =>{
                         label={labels.title}
                         className={classes.input}
                         type="text"
-                        value={values.title}
+                        value={updateState.title}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         helperText={touched.title ? errors.title : ""}
@@ -77,7 +76,7 @@ const UpdateEvent = props =>{
                         id="description"
                         label={labels.description}
                         type="text"
-                        value={values.description}
+                        value={updateState.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         helperText={touched.description ? errors.description : ""}
@@ -89,7 +88,7 @@ const UpdateEvent = props =>{
                         id="dateTime"
                         label={labels.datetime}
                         type="datetime-local"
-                        value={values.dateTime}
+                        value={updateState.date}
                         onBlur={handleBlur}
                         onChange={e => setFieldValue("dateTime", e.target.value)}
                         InputLabelProps={{

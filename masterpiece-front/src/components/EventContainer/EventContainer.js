@@ -90,11 +90,14 @@ class EventContainer extends Component {
         this.updateEventList(currentPage)
     }
 
-    openUpdateForm = (id) =>{
+    openUpdateForm = (id, title, date, description) =>{
         this.setState({
             updateEvent: {
                 open: true,
-                id:id
+                id:id,
+                title: title,
+                date: date,
+                description: description
             }
         })
     }
