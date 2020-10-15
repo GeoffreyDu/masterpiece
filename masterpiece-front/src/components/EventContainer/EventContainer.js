@@ -110,14 +110,35 @@ class EventContainer extends Component {
         })
     }
 
+    fetchMoreData = async (page) => {
+        
+        const accessToken = getWithExpiry("access_token");
+        const userId = localStorage.getItem('user_id');
+        axios.get(`http://localhost:8081/api/events/user/${userId}?p=${page+1}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
+        .then(response => {
+            console.log(response)
+            this.setState({
+                events: this.state.events.concat(response.data.content)
+              });
+        })
+        .catch(error => {
+            const errMessage = errorType(error.response)
+            console.log(errMessage)
+            this.props.updateOpen([errMessage], "error")
+        })
+        
+      };
+    
+
     render() {
         const logged = IsLogged();
         if (!logged) {
             this.props.history.push("/connexion")
         }
+        console.log(this.state)
         return (
             <Container component="main" maxWidth="md" style={{ minHeight: "calc(100vh - 150px)" }}>
-                <EventList events={this.state.events} eventDelete={this.eventDelete} nextPage={this.nextPage} previousPage={this.previousPage} openUpdateForm={this.openUpdateForm}/>
+                <EventList state={this.state} eventDelete={this.eventDelete} nextPage={this.nextPage} previousPage={this.previousPage} openUpdateForm={this.openUpdateForm} fetchMoreData={this.fetchMoreData}/>
                 <EventForm updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} currentPage={this.state.currentPage}/>
                 <UpdateForm updateState={this.state.updateEvent} updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} eventUpdate={this.eventUpdate} closeUpdateForm={this.closeUpdateForm} currentPage={this.state.currentPage}/>
             </Container>

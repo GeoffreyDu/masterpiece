@@ -13,7 +13,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/events")
-@CrossOrigin(origins="*", allowedHeaders = "*")
 public class EventController {
     private final EventService eventService;
 

@@ -24,7 +24,6 @@ const form = props => {
     values,
     touched,
     errors,
-    isSubmitting,
     handleChange,
     handleBlur,
     handleSubmit, 
@@ -74,7 +73,7 @@ const form = props => {
                             />
                         </CardContent>
                         <CardActions className="button">
-                            <Button type="submit" color="primary" disabled={isSubmitting}>
+                            <Button type="submit" color="primary">
                               Connexion
                             </Button>
                         </CardActions>

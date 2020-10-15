@@ -3,6 +3,8 @@ import { Grid, Container, makeStyles, Typography, Button } from '@material-ui/co
 import Event from "../Event/Event";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import InfiniteScroll from "react-infinite-scroll-component";
+
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -33,15 +35,22 @@ const useStyles = makeStyles((theme) => ({
                         Bienvenue <span style={{fontWeight:"bold", color:"black"}}>{username}</span>, ici vous pouvez gérer vos événements. Vous avez la possibilité de consulter la liste de vos événements, ainsi que d'en ajouter de nouveaux.
                     </Typography>
                 </div>
-            {props.events.length < 1 ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (
-                <>
-                    {props.events.map((event) => (
-                    <Grid item key={event.id} xs={12} sm={6} md={4}>
-                        <Event title={event.title} text={event.description} datetime={event.dateTime} id={event.id} eventDelete={(id)=>props.eventDelete(event.id)} openUpdateForm={(id, title, date, description)=>props.openUpdateForm(event.id, event.title, event.dateTime, event.description)}/>
-                    </Grid>
-                    ))}
-                </>
-            )}
+                <InfiniteScroll
+                    dataLength={props.state.events.length}
+                    next={props.fetchMoreData(props.state.currentPage)}
+                    hasMore={true}
+                    loader={<h4>Loading...</h4>}
+                    >
+                    {props.events.length < 1 ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (
+                    <>
+                        {props.events.map((event) => (
+                        <Grid item key={event.id} xs={12} sm={6} md={4}>
+                            <Event title={event.title} text={event.description} datetime={event.dateTime} id={event.id} eventDelete={(id)=>props.eventDelete(event.id)} openUpdateForm={(id, title, date, description)=>props.openUpdateForm(event.id, event.title, event.dateTime, event.description)}/>
+                        </Grid>
+                        ))}
+                    </>
+                )}
+                </InfiniteScroll>
             </Grid>
             <div className={classes.buttons}>
                 <Button variant="contained" size="small" color="primary" onClick={()=>props.previousPage()}>

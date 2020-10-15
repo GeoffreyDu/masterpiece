@@ -4,8 +4,6 @@ import fr.formation.masterpieceback.dtos.EventDto;
 import fr.formation.masterpieceback.dtos.EventDtoUpdate;
 import fr.formation.masterpieceback.dtos.EventViewDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 
 public interface EventService {
     void create(EventDto dto);
