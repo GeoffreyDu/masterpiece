@@ -106,7 +106,7 @@ const UpdateEvent = props =>{
                         Annuler
                       </Button>
                       <Button type="submit" color="primary">
-                        Créer
+                        Modifier
                       </Button>
                     </DialogActions>    
                   </form>

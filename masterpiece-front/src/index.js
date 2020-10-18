@@ -32,7 +32,7 @@ class App extends Component{
               <Route exact path='/connexion' component={() => <SigninForm updateOpen={this.updateOpen}/>}/>
               <PrivateRoute exact path="/evenements" component={() => <EventContainer updateOpen={this.updateOpen}/>} />
             </Switch>
-          <Footer/>
+          {/* <Footer/> */}
         </div>
         <ErrorSnackbars setUpdateOpen={this.setUpdateOpen}/>
       </BrowserRouter>

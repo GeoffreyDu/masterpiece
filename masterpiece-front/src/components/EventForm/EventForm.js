@@ -173,7 +173,7 @@ const EventForm = withFormik({
       props.updateOpen(["Evénement créé avec succès"], "success")
 
       // Update current event list page
-      props.updateEventList(props.currentPage)
+      props.updateEventList(0)
     })
     .catch(error => {
       const errMessage = errorType(error.response)

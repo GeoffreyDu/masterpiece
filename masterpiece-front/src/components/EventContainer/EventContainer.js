@@ -35,7 +35,8 @@ class EventContainer extends Component {
             this.setState({
                 events: response.data.content,
                 nbPages: response.data.totalPages,
-                currentPage: response.data.pageable.pageNumber
+                currentPage: response.data.pageable.pageNumber,
+                last: response.data.last
             })
         })
         .catch(error => {
@@ -110,7 +111,7 @@ class EventContainer extends Component {
         })
     }
 
-    fetchMoreData = async (page) => {
+    fetchMoreData = (page) => {
         
         const accessToken = getWithExpiry("access_token");
         const userId = localStorage.getItem('user_id');
@@ -118,7 +119,10 @@ class EventContainer extends Component {
         .then(response => {
             console.log(response)
             this.setState({
-                events: this.state.events.concat(response.data.content)
+                events: this.state.events.concat(response.data.content),
+                nbPages: response.data.totalPages,
+                currentPage: response.data.pageable.pageNumber,
+                last: response.data.last
               });
         })
         .catch(error => {
@@ -138,7 +142,7 @@ class EventContainer extends Component {
         console.log(this.state)
         return (
             <Container component="main" maxWidth="md" style={{ minHeight: "calc(100vh - 150px)" }}>
-                <EventList state={this.state} eventDelete={this.eventDelete} nextPage={this.nextPage} previousPage={this.previousPage} openUpdateForm={this.openUpdateForm} fetchMoreData={this.fetchMoreData}/>
+                <EventList events={this.state.events} currentPage={this.state.currentPage} last={this.state.last} eventDelete={this.eventDelete} nextPage={this.nextPage} previousPage={this.previousPage} openUpdateForm={this.openUpdateForm} fetchMoreData={this.fetchMoreData}/>
                 <EventForm updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} currentPage={this.state.currentPage}/>
                 <UpdateForm updateState={this.state.updateEvent} updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} eventUpdate={this.eventUpdate} closeUpdateForm={this.closeUpdateForm} currentPage={this.state.currentPage}/>
             </Container>
