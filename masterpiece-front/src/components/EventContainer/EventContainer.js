@@ -19,7 +19,10 @@ class EventContainer extends Component {
             title: "",
             date: "",
             description: ""
-          }
+          },
+        nbPages: 0,
+        currentPage: 0,
+        last: false
     }
 
     componentDidMount(){
@@ -141,7 +144,7 @@ class EventContainer extends Component {
         }
         console.log(this.state)
         return (
-            <Container component="main" maxWidth="md" style={{ minHeight: "calc(100vh - 150px)" }}>
+            <Container component="main" maxWidth="md" style={{ minHeight: "100vh" }}>
                 <EventList events={this.state.events} currentPage={this.state.currentPage} last={this.state.last} eventDelete={this.eventDelete} nextPage={this.nextPage} previousPage={this.previousPage} openUpdateForm={this.openUpdateForm} fetchMoreData={this.fetchMoreData}/>
                 <EventForm updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} currentPage={this.state.currentPage}/>
                 <UpdateForm updateState={this.state.updateEvent} updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} eventUpdate={this.eventUpdate} closeUpdateForm={this.closeUpdateForm} currentPage={this.state.currentPage}/>

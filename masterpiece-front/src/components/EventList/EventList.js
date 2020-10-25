@@ -3,6 +3,7 @@ import { Grid, Container, makeStyles, Typography, Button } from '@material-ui/co
 import Event from "../Event/Event";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import './eventlist.css'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         justifyContent:"space-around",
         marginTop:"40px"
+    },
+    event: {
+        height: "100%"
     }
   }));
   const EventList = (props) => {
@@ -26,12 +30,10 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
     return (
         <InfiniteScroll
-                dataLength={props.events.length}
-                next={!(props.last) ? () => props.fetchMoreData(props.currentPage): console.log("you are at the last page")}
-                hasMore={true}
-                loader={<h4>Loading...</h4>}
-                >
-                    {console.log(props.currentpage)}
+            dataLength={props.events.length}
+            next={!(props.last) ? () => props.fetchMoreData(props.currentPage): console.log("you are at the last page")}
+            hasMore={true}
+        >
             <Container className={classes.cardGrid} maxWidth="md">
                 <Grid container spacing={4}>
                     <div className={classes.heroContent}>
@@ -43,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
                         </Typography>
                     </div>
                     
-                        {props.events.length < 1 ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (
+                    {props.events.length < 1 ? <h2 style={{marginLeft:"auto", marginRight:"auto", color:"black"}} className="text-center">Aucun événements</h2> : (
                         <>
                             {props.events.map((event) => (
                             <Grid item key={event.id} xs={12} sm={6} md={4}>
