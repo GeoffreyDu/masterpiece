@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events", indexes = {
-        @Index(name = "events_users_user_id_IDX", columnList = "user_id")
+        @Index(name = "idx_belongs", columnList = "user_id")
 })
 public class Event {
     @Id
@@ -23,7 +23,7 @@ public class Event {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "events_users_user_id_FK"))
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_belongs"))
     private User user;
 
     public Event() {

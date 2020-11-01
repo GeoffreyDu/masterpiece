@@ -1,14 +1,11 @@
 package fr.formation.masterpieceback.dtos;
 
-import fr.formation.masterpieceback.entities.User;
-
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 
 public class EventDto {
 
