@@ -27,12 +27,12 @@ class EventContainer extends Component {
 
     componentDidMount(){
         this.updateEventList(0);
+        this.loadUsername();
     }
 
     updateEventList = (page) =>{
         const accessToken = getWithExpiry("access_token");
-        const userId = localStorage.getItem('user_id');
-        axios.get(`http://localhost:8081/api/events/user/${userId}?p=${page}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
+        axios.get(`http://localhost:8081/api/events/all?p=${page}&s=6`, {headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
             console.log(response)
             this.setState({
@@ -46,6 +46,21 @@ class EventContainer extends Component {
             const errMessage = errorType(error.response)
             console.log(errMessage)
             this.props.updateOpen([errMessage], "error")
+        })
+    }
+
+    loadUsername = () => {
+        const accessToken = getWithExpiry("access_token");
+        axios.get(`http://localhost:8081/api/users/username`, {headers:{"Authorization": `Bearer ${accessToken}`}})
+        .then(response => {
+            console.log(response);
+            this.setState({
+                username: response.data.username
+            })
+        })
+        .catch(error => {
+            const errMessage = errorType(error.response)
+            console.log(errMessage)
         })
     }
 
@@ -77,23 +92,6 @@ class EventContainer extends Component {
         })
     }
 
-    nextPage = () =>{
-        let totalPages = this.state.nbPages
-        let currentPage = this.state.currentPage
-        if(currentPage < totalPages-1){
-            currentPage++
-        }
-        this.updateEventList(currentPage)
-    }
-
-    previousPage = () =>{
-        let currentPage = this.state.currentPage
-        if (currentPage > 0) {
-            currentPage--    
-        }
-        this.updateEventList(currentPage)
-    }
-
     openUpdateForm = (id, title, date, description) =>{
         this.setState({
             updateEvent: {
@@ -117,8 +115,7 @@ class EventContainer extends Component {
     fetchMoreData = (page) => {
         
         const accessToken = getWithExpiry("access_token");
-        const userId = localStorage.getItem('user_id');
-        axios.get(`http://localhost:8081/api/events/user/${userId}?p=${page+1}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
+        axios.get(`http://localhost:8081/api/events/all?p=${page+1}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
             console.log(response)
             this.setState({
@@ -145,7 +142,7 @@ class EventContainer extends Component {
         console.log(this.state)
         return (
             <Container component="main" maxWidth="md" style={{ minHeight: "100vh" }}>
-                <EventList events={this.state.events} currentPage={this.state.currentPage} last={this.state.last} eventDelete={this.eventDelete} nextPage={this.nextPage} previousPage={this.previousPage} openUpdateForm={this.openUpdateForm} fetchMoreData={this.fetchMoreData}/>
+                <EventList events={this.state.events} currentPage={this.state.currentPage} last={this.state.last} eventDelete={this.eventDelete} openUpdateForm={this.openUpdateForm} fetchMoreData={this.fetchMoreData} username={this.state.username}/>
                 <EventForm updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} currentPage={this.state.currentPage}/>
                 <UpdateForm updateState={this.state.updateEvent} updateEventList={this.updateEventList} updateOpen={this.props.updateOpen} eventUpdate={this.eventUpdate} closeUpdateForm={this.closeUpdateForm} currentPage={this.state.currentPage}/>
             </Container>

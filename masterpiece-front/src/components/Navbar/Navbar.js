@@ -69,10 +69,9 @@ function NavBar(props) {
   }
   let navNotLogged = [
     {text:'Inscription', path:'/inscription', icon: <AddCircleIcon/>} ,
-    {text: 'Connexion', path:'/connexion', icon: <PlayCircleFilledIcon/>},
-    {text:'Aide', path:'/', icon: <HelpIcon/>}
+    {text: 'Connexion', path:'/connexion', icon: <PlayCircleFilledIcon/>}
   ]
-  let navLogged = [{text: 'Evénements', path:'/evenements', icon: <HelpIcon/>}, {text: 'Déconnexion', path:{logout}, icon: <HelpIcon/>}, {text:'Aide', path:'/', icon: <HelpIcon/>}]
+  let navLogged = [{text: 'Evénements', path:'/evenements', icon: <HelpIcon/>}, {text: 'Déconnexion', path:{logout}, icon: <HelpIcon/>}]
   let accessToken = localStorage.getItem('access_token');
   accessToken != null ? navLinks = navLogged : navLinks = navNotLogged;
   const handleDrawerToggle = () => {

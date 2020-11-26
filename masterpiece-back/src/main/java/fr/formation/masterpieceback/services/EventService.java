@@ -10,5 +10,5 @@ public interface EventService {
     void update(Long id, EventDtoUpdate dto);
     void delete(Long id);
     EventViewDto get(Long id);
-    Page<EventViewDto> getAllEventByUser(Long userId, int page, int size);
+    Page<EventViewDto> getAllEventByUser(int page, int size);
 }

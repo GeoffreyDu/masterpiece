@@ -1,5 +1,6 @@
 package fr.formation.masterpieceback.services;
 
+import fr.formation.masterpieceback.configuration.SecurityHelper;
 import fr.formation.masterpieceback.dtos.EventDto;
 import fr.formation.masterpieceback.dtos.EventDtoUpdate;
 import fr.formation.masterpieceback.dtos.EventViewDto;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import static fr.formation.masterpieceback.configuration.SecurityHelper.getUserId;
 
 @Service
 public class EventServiceImpl implements EventService{
@@ -58,7 +61,8 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public Page<EventViewDto> getAllEventByUser(Long userId, int page, int size) {
+    public Page<EventViewDto> getAllEventByUser(int page, int size) {
+        Long userId = getUserId();
         Pageable pageable = PageRequest.of(page, size);
         Page<EventViewDto> eventList = eventRepo.findAllByUserId(userId, pageable);
         return eventList;

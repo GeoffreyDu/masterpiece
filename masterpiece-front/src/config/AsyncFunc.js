@@ -8,11 +8,8 @@ export async function login(mail, password) {
     
     try {
         const response = await axios.post(`http://localhost:8081/oauth/token?grant_type=${grantType}&username=${mail}&password=${password}&client_id=${clientId}`, {headers:{"Content-Type":"application/x-www-form-urlencoded"}})
-
         const accessToken = response.data.access_token
         let expires_in = response.data.expires_in
-        localStorage.setItem("user_id", response.data.userId);
-        localStorage.setItem("username", response.data.username)
         setWithExpiry("access_token", accessToken, expires_in)
         return true;
     } catch (error) {

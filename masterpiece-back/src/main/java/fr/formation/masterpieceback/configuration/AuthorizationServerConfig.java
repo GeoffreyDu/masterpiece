@@ -2,6 +2,7 @@ package fr.formation.masterpieceback.configuration;
 
 import java.util.Arrays;
 
+import fr.formation.masterpieceback.dtos.UserDto;
 import fr.formation.masterpieceback.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -155,7 +157,7 @@ public class AuthorizationServerConfig
     }
 
     /**
-     * Standard enpoint returning a view of the current authenticated user.
+     * Standard endpoint returning a view of the current authenticated user.
      * <p>
      * Could be in a "user controller".
      *

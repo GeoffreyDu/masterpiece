@@ -1,9 +1,6 @@
 package fr.formation.masterpieceback.dtos;
 
-
-public interface UserViewDto {
+public interface UserUsernameViewDto {
     Long getId();
-    String getMail();
     String getUsername();
-    String getPassword();
 }

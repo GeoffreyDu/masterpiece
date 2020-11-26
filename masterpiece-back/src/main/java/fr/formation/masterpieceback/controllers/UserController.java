@@ -1,6 +1,7 @@
 package fr.formation.masterpieceback.controllers;
 
 import fr.formation.masterpieceback.dtos.UserDto;
+import fr.formation.masterpieceback.dtos.UserUsernameViewDto;
 import fr.formation.masterpieceback.entities.User;
 import fr.formation.masterpieceback.services.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,11 @@ public class UserController {
     @PostMapping
     protected void create(@Valid @RequestBody UserDto dto){
         userService.create(dto);
+    }
+
+    @GetMapping("/username")
+    protected UserUsernameViewDto getUsername(){
+        return userService.getUsername();
     }
     
 }

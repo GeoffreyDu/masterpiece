@@ -38,9 +38,9 @@ public class EventController {
         return eventService.get(id);
     }
 
-    @GetMapping("/user/{userId}")
-    protected Page<EventViewDto> getAllEventByUserId(@PathVariable("userId") Long userId, @RequestParam("p") int page,
+    @GetMapping("/all")
+    protected Page<EventViewDto> getAllEventByUserId(@RequestParam("p") int page,
                                          @RequestParam("s") int size) {
-        return eventService.getAllEventByUser(userId, page, size);
+        return eventService.getAllEventByUser(page, size);
     }
 }

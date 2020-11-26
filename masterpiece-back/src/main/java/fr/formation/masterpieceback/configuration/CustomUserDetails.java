@@ -14,20 +14,14 @@ public class CustomUserDetails extends User {
     private static final long serialVersionUID = 5803283930339051994L;
 
     private Long id;
-    private String pseudo;
 
     public CustomUserDetails(UserViewDto user) {
         super(user.getMail(), user.getPassword(), new HashSet<GrantedAuthority>());
         id = user.getId();
-        pseudo = user.getUsername();
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getPseudo() {
-        return pseudo;
     }
 
     @Override

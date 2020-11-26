@@ -2,6 +2,7 @@ package fr.formation.masterpieceback.services;
 
 import fr.formation.masterpieceback.configuration.CustomUserDetails;
 import fr.formation.masterpieceback.dtos.UserDto;
+import fr.formation.masterpieceback.dtos.UserUsernameViewDto;
 import fr.formation.masterpieceback.dtos.UserViewDto;
 import fr.formation.masterpieceback.entities.User;
 import fr.formation.masterpieceback.repositories.UserRepository;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static fr.formation.masterpieceback.configuration.SecurityHelper.getUserId;
 
 
 @Service
@@ -58,6 +61,12 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "no user found with mail: " + mail));
         return new CustomUserDetails(user);
+    }
+
+    @Override
+    public UserUsernameViewDto getUsername(){
+        Long userId = getUserId();
+        return userRepo.getById(userId);
     }
 
 }
