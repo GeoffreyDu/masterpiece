@@ -7,7 +7,7 @@ const errorType = (error)=>{
     if (status === 400) {
         if (Array.isArray(error.data)){
             error.data.forEach(msg => {
-                messageContainer.push( `${msg.attribute} : ${labelErrors[msg.code]}`)  
+                messageContainer.push(labelErrors[msg.code])  
             });
         }
         else{

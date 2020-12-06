@@ -27,19 +27,6 @@ public class UserServiceImpl implements UserService{
         this.passwordEncoder = passwordEncoder;
     }
 
-    /*private void populateAndSave(UserDto dto, User user) {
-        // Convert dto to entity:
-        user.setMail(dto.getMail());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-
-        Role defaultRole = roleRepo.findByDefaultRole(true);
-        Set<Role> roles = new HashSet();
-        roles.add(defaultRole);
-        user.setRoles(roles);
-
-        userRepo.save(user); // Save to database
-    }*/
-
     @Override
     public void create(UserDto dto){
         /*User user = new User();

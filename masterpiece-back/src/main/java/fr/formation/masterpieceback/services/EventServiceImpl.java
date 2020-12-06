@@ -1,10 +1,10 @@
 package fr.formation.masterpieceback.services;
 
-import fr.formation.masterpieceback.configuration.SecurityHelper;
 import fr.formation.masterpieceback.dtos.EventDto;
 import fr.formation.masterpieceback.dtos.EventDtoUpdate;
 import fr.formation.masterpieceback.dtos.EventViewDto;
 import fr.formation.masterpieceback.entities.Event;
+import fr.formation.masterpieceback.entities.User;
 import fr.formation.masterpieceback.repositories.EventRepository;
 import fr.formation.masterpieceback.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -29,14 +29,14 @@ public class EventServiceImpl implements EventService{
 
     @Override
     public void create(EventDto dto){
-        /*Event event = new Event();
+        Event event = new Event();
         event.setTitle(dto.getTitle());
         event.setDateTime(dto.getDateTime());
         event.setDescription(dto.getDescription());
-        User user = userRepo.findById(dto.getUserId()).get();
-        event.setUser(user);*/
+        User user = userRepo.findById(getUserId()).get();
+        event.setUser(user);
         // Model Mapper
-        Event event = mapper.map(dto, Event.class);
+        // Event event = mapper.map(dto, Event.class);
         eventRepo.save(event);
     }
 
@@ -66,6 +66,11 @@ public class EventServiceImpl implements EventService{
         Pageable pageable = PageRequest.of(page, size);
         Page<EventViewDto> eventList = eventRepo.findAllByUserId(userId, pageable);
         return eventList;
+    }
+
+    @Override
+    public boolean uniqueEvent(EventDto dto){
+        return dto != null && !eventRepo.existsByTitleAndDateTimeAndUserId(dto.getTitle(), dto.getDateTime(), getUserId());
     }
 
 }

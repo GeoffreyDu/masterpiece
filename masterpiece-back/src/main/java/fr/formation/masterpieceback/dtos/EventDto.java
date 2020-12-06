@@ -1,12 +1,14 @@
 package fr.formation.masterpieceback.dtos;
 
+import fr.formation.masterpieceback.constraints.UniqueEvent;
+
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-
+@UniqueEvent
 public class EventDto {
 
     @NotBlank
@@ -20,9 +22,6 @@ public class EventDto {
     @NotBlank
     @Size(min = 3, max = 255)
     private String description;
-
-    @NotNull
-    private Long userId;
 
 
     public EventDto() {
@@ -52,11 +51,4 @@ public class EventDto {
         this.description = description;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 }

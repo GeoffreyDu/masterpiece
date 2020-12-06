@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "events", indexes = {
+@Table(name = "events",
+        uniqueConstraints =@UniqueConstraint(name ="uq_event", columnNames = {"title", "event_datetime", "user_id"}),
+        indexes = {
         @Index(name = "idx_belongs", columnList = "user_id")
 })
 public class Event {
