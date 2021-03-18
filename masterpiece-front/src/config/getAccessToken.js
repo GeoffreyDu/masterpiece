@@ -1,4 +1,4 @@
-export default function getWithExpiry(key) {
+export default function getAccessToken(key) {
 	const expiry_token = localStorage.getItem(key)
 	// if the item doesn't exist, return null
 	if (!expiry_token) {

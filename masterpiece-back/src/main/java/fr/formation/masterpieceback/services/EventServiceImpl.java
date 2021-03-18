@@ -29,14 +29,17 @@ public class EventServiceImpl implements EventService{
 
     @Override
     public void create(EventDto dto){
+        // Create object event
         Event event = new Event();
+        // Convert Dto to entities
+        // Set each attribute
         event.setTitle(dto.getTitle());
         event.setDateTime(dto.getDateTime());
         event.setDescription(dto.getDescription());
+        // Retrieve user linked to the event
         User user = userRepo.findById(getUserId()).get();
         event.setUser(user);
-        // Model Mapper
-        // Event event = mapper.map(dto, Event.class);
+        // Call the repository to save the user in the database
         eventRepo.save(event);
     }
 
@@ -62,9 +65,12 @@ public class EventServiceImpl implements EventService{
 
     @Override
     public Page<EventViewDto> getAllEventByUser(int page, int size) {
+        // Retrieve id of the user
         Long userId = getUserId();
+        // Create PageRequest object
         Pageable pageable = PageRequest.of(page, size);
-        Page<EventViewDto> eventList = eventRepo.findAllByUserId(userId, pageable);
+        // Create page to contains event list
+        Page<EventViewDto> eventList = eventRepo.findAllByUserIdOrderByDateTimeAsc(userId, pageable);
         return eventList;
     }
 

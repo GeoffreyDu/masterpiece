@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class EventDtoUpdate {
 
     @NotBlank
-    @Size(min = 3, max = 255)
+    @Size(min = 3, max = 18)
     private String title;
 
     @NotNull
@@ -18,7 +18,7 @@ public class EventDtoUpdate {
     private LocalDateTime dateTime;
 
     @NotBlank
-    @Size(min = 3, max = 255)
+    @Size(min = 3, max = 30)
     private String description;
 
     

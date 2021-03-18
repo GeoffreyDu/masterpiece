@@ -2,7 +2,6 @@ import labelErrors from "../config/labelErrors";
 
 const errorType = (error)=>{
     const status = error.status;
-    console.log(status)
     let messageContainer = [];
     if (status === 400) {
         if (Array.isArray(error.data)){
@@ -26,7 +25,6 @@ const errorType = (error)=>{
     else{
         messageContainer.push(labelErrors.General)   
     }
-    console.log(messageContainer)
     return messageContainer;
 }
 

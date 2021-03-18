@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
     EventViewDto getById(Long id);
-    Page<EventViewDto> findAllByUserId(Long userId, Pageable pageable);
+    Page<EventViewDto> findAllByUserIdOrderByDateTimeAsc(Long userId, Pageable pageable);
     boolean existsByTitleAndDateTimeAndUserId(String title, LocalDateTime datetime, Long userId);
 }

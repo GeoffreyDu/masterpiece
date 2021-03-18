@@ -103,7 +103,7 @@ const SigninForm = withFormik({
       .email("Entrez un mail valide")
       .required("Le mail est requis"),
     password: Yup.string()
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, labelErrors.ValidPassword
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})/, labelErrors.ValidPassword
       )
       .required("Entrez votre mot de passe"),
   }),

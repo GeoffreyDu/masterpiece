@@ -8,24 +8,24 @@ import java.time.LocalDateTime;
 @Table(name = "events",
         uniqueConstraints =@UniqueConstraint(name ="uq_event", columnNames = {"title", "event_datetime", "user_id"}),
         indexes = {
-        @Index(name = "idx_belongs", columnList = "user_id")
+        @Index(name = "idx_concerns", columnList = "user_id")
 })
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 18)
     private String title;
 
     @Column(name = "event_datetime", nullable = false)
     private LocalDateTime dateTime;
 
-    @Column(name = "event_description", nullable = false)
+    @Column(name = "event_description", nullable = false, length = 30)
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_belongs"))
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_concerns"))
     private User user;
 
     public Event() {

@@ -157,7 +157,7 @@ const SignupForm = withFormik({
     const { history } = props;
     const user = JSON.stringify(values);
     
-    axios.post("http://localhost:8081/api/users", user, {headers:{"Content-Type":"application/json"}})
+    axios.post(`${process.env.REACT_APP_URL}/api/users`, user, {headers:{"Content-Type":"application/json"}})
     .then(response => {
       console.log(response)
       props.updateOpen(["Compte créé avec succès"], "success")

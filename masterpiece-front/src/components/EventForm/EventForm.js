@@ -15,7 +15,7 @@ import axios from "axios";
 import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 import labels from "../../config/config";
 import errorType from "../../error-type/errorType";
-import getWithExpiry from "../../config/getWithExpiry";
+import getAccessToken from "../../config/getAccessToken";
 
 const useStyles = makeStyles(theme => ({
   eventNameInput: {
@@ -151,11 +151,11 @@ const EventForm = withFormik({
   validationSchema: Yup.object().shape({
     title: Yup.string()
         .min(3, "Le tire requiert minimum 3 caractères")
-        .max(255)
+        .max(18, "Le titre requiert maximum 18 caractères")
         .required("Un titre est requis"),
     description: Yup.string()
         .min(3, "La description requiert minimum 3 caractères")
-        .max(255)
+        .max(30, "Le titre requiert maximum 30 caractères")
         .required("Une description est requise"),
     dateTime: Yup.date()
         .min(new Date(), "L'événement ne peut se produire dans le passé")
@@ -163,21 +163,21 @@ const EventForm = withFormik({
   }),
 
   handleSubmit: (values, { resetForm, setSubmitting, props}) => {
+    // Convert input to JSON
     const event = JSON.stringify(values);
-    const accessToken = getWithExpiry("access_token");
-    axios.post("http://localhost:8081/api/events", event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
+    // Get access token from local storage
+    const accessToken = getAccessToken("access_token");
+    // API call to create an avent
+    axios.post(`${process.env.REACT_APP_URL}/api/events`, event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
     .then(response => {
-      console.log(response)
-
       // Show Notification
       props.updateOpen(["Evénement créé avec succès"], "success")
-
       // Update current event list page
       props.updateEventList(0)
     })
     .catch(error => {
       const errMessage = errorType(error.response)
-      console.log(error.response)
+      // If error show message in pop up notification
       props.updateOpen([errMessage], "error")
     })
     resetForm()

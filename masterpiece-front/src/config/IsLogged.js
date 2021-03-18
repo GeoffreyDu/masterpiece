@@ -1,8 +1,8 @@
-import getWithExpiry from "./getWithExpiry";
+import getAccessToken from "./getAccessToken";
 
 export default function IsLogged() {
     let logged = null;
-    const accessToken = getWithExpiry("access_token");
+    const accessToken = getAccessToken("access_token");
 
     accessToken ? logged = true : logged = false;
 

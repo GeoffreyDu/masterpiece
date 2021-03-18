@@ -129,12 +129,12 @@ const UpdateForm = withFormik({
 
   validationSchema: Yup.object().shape({
     title: Yup.string()
-        .min(3, "Le tire requiert minimum 3 caractères")
-        .max(255)
+        .min(3, "Le titre requiert minimum 3 caractères")
+        .max(18, "Le titre requiert maximum 18 caractères")
         .required("Un titre est requis"),
     description: Yup.string()
         .min(3, "La description requiert minimum 3 caractères")
-        .max(255)
+        .max(30, "Le titre requiert maximum 30 caractères")
         .required("Une description est requise"),
     dateTime: Yup.date()
         .min(new Date(), "L'événement ne peut se produire dans le passé")

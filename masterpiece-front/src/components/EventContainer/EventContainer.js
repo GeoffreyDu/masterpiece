@@ -5,12 +5,11 @@ import UpdateForm from '../UpdateForm/UpdateForm';
 import { Container } from '@material-ui/core';
 import axios from 'axios';
 import errorType from "../../error-type/errorType";
-import getWithExpiry from "../../config/getWithExpiry";
+import getAccessToken from "../../config/getAccessToken";
 import IsLogged from "../../config/IsLogged";
 import { withRouter } from "react-router-dom";
 
 class EventContainer extends Component {
-
     state = {
         events: [],
         updateEvent: {
@@ -24,17 +23,17 @@ class EventContainer extends Component {
         currentPage: 0,
         last: false
     }
-
     componentDidMount(){
+        // When the component is loaded, load the first page of events
         this.updateEventList(0);
         this.loadUsername();
     }
-
     updateEventList = (page) =>{
-        const accessToken = getWithExpiry("access_token");
-        axios.get(`http://localhost:8081/api/events/all?p=${page}&s=6`, {headers:{"Authorization": `Bearer ${accessToken}`}})
+        // get access token from local storage
+        const accessToken = getAccessToken("access_token");
+        // API call to get the list of events
+        axios.get(`${process.env.REACT_APP_URL}/api/events/all?p=${page}&s=6`, {headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
-            console.log(response)
             this.setState({
                 events: response.data.content,
                 nbPages: response.data.totalPages,
@@ -44,50 +43,46 @@ class EventContainer extends Component {
         })
         .catch(error => {
             const errMessage = errorType(error.response)
-            console.log(errMessage)
+            // If error show message in pop up notification
             this.props.updateOpen([errMessage], "error")
         })
     }
 
     loadUsername = () => {
-        const accessToken = getWithExpiry("access_token");
-        axios.get(`http://localhost:8081/api/users/username`, {headers:{"Authorization": `Bearer ${accessToken}`}})
+        const accessToken = getAccessToken("access_token");
+        axios.get(`${process.env.REACT_APP_URL}/api/users/username`, {headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
-            console.log(response);
             this.setState({
                 username: response.data.username
             })
         })
         .catch(error => {
-            const errMessage = errorType(error.response)
-            console.log(errMessage)
+            errorType(error.response)
         })
     }
 
     eventDelete = id =>{
-        const accessToken = getWithExpiry("access_token");
-        axios.delete(`http://localhost:8081/api/events/${id}`, {headers:{"Authorization": `Bearer ${accessToken}`}})
+        const accessToken = getAccessToken("access_token");
+        axios.delete(`${process.env.REACT_APP_URL}/api/events/${id}`, {headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
             this.props.updateOpen(["Evénement supprimé avec succès"], "success")
             this.updateEventList(0);
         })
         .catch(error => {
             const errMessage = errorType(error.response)
-            console.log(errMessage)
             this.props.updateOpen([errMessage], "error")
         })
     }
 
     eventUpdate = (event, id) =>{
-        const accessToken = getWithExpiry("access_token");
-        axios.put(`http://localhost:8081/api/events/${id}`, event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
+        const accessToken = getAccessToken("access_token");
+        axios.put(`${process.env.REACT_APP_URL}/api/events/${id}`, event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
         .then(response => {
             this.props.updateOpen(["Evénement modifié avec succès"], "success")
             this.updateEventList(0);
         })
         .catch(error => {
             const errMessage = errorType(error.response)
-            console.log(errMessage)
             this.props.updateOpen([errMessage], "error")
         })
     }
@@ -114,10 +109,9 @@ class EventContainer extends Component {
 
     fetchMoreData = (page) => {
         
-        const accessToken = getWithExpiry("access_token");
-        axios.get(`http://localhost:8081/api/events/all?p=${page+1}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
+        const accessToken = getAccessToken("access_token");
+        axios.get(`${process.env.REACT_APP_URL}/api/events/all?p=${page+1}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
-            console.log(response)
             this.setState({
                 events: this.state.events.concat(response.data.content),
                 nbPages: response.data.totalPages,
@@ -127,7 +121,6 @@ class EventContainer extends Component {
         })
         .catch(error => {
             const errMessage = errorType(error.response)
-            console.log(errMessage)
             this.props.updateOpen([errMessage], "error")
         })
         
@@ -138,8 +131,8 @@ class EventContainer extends Component {
         const logged = IsLogged();
         if (!logged) {
             this.props.history.push("/connexion")
+            this.props.updateOpen(["Session expirée, veuillez vous reconnecter"], "error")
         }
-        console.log(this.state)
         return (
             <Container component="main" maxWidth="md" style={{ minHeight: "100vh" }}>
                 <EventList events={this.state.events} currentPage={this.state.currentPage} last={this.state.last} eventDelete={this.eventDelete} openUpdateForm={this.openUpdateForm} fetchMoreData={this.fetchMoreData} username={this.state.username}/>
