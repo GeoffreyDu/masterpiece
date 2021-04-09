@@ -137,12 +137,12 @@ const SignupForm = withFormik({
 
   validationSchema: Yup.object().shape({
     mail: Yup.string()
-      .max(255)
+      .max(255, "Le mail ne peut excéder 255 caractères")
       .email("Entrez un mail valide")
       .required("Le mail est requis"),
     username: Yup.string()
-      .min(3)
-      .max(100)
+      .min(3, "Le pseudo ne peut faire moins de 3 caratères")
+      .max(100, "Le pseudo ne peut excéder 100 caractères")
       .required("Le pseudo est requis"),
     password: Yup.string()
       .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})/, labelErrors.ValidPassword)

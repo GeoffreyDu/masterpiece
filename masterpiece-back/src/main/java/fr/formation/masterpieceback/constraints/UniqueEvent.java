@@ -7,9 +7,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+// Annotation for unique event
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy =UniqueEventValidator.class)
+@Constraint(validatedBy=UniqueEventValidator.class)
 public @interface UniqueEvent {
     String message() default "Un événement semblable existe déjà";
     Class<?>[] groups() default {};

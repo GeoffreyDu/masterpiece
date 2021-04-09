@@ -7,7 +7,6 @@ import fr.formation.masterpieceback.entities.Event;
 import fr.formation.masterpieceback.entities.User;
 import fr.formation.masterpieceback.repositories.EventRepository;
 import fr.formation.masterpieceback.repositories.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,12 +18,10 @@ import static fr.formation.masterpieceback.configuration.SecurityHelper.getUserI
 public class EventServiceImpl implements EventService{
     private final EventRepository eventRepo;
     private final UserRepository userRepo;
-    private final ModelMapper mapper;
 
-    public EventServiceImpl(EventRepository eventRepo, UserRepository userRepo, ModelMapper mapper) {
+    public EventServiceImpl(EventRepository eventRepo, UserRepository userRepo) {
         this.eventRepo = eventRepo;
         this.userRepo = userRepo;
-        this.mapper = mapper;
     }
 
     @Override
@@ -39,12 +36,13 @@ public class EventServiceImpl implements EventService{
         // Retrieve user linked to the event
         User user = userRepo.findById(getUserId()).get();
         event.setUser(user);
-        // Call the repository to save the user in the database
+        // Call the repository to save the event in the database
         eventRepo.save(event);
     }
 
     @Override
     public void update(Long id, EventDtoUpdate dto){
+        // Like create method but the event retrieve event by its id
         Event event = eventRepo.findById(id).get();
         event.setTitle(dto.getTitle());
         event.setDateTime(dto.getDateTime());
@@ -59,23 +57,19 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public EventViewDto get(Long id){
-        return eventRepo.getById(id);
-    }
-
-    @Override
-    public Page<EventViewDto> getAllEventByUser(int page, int size) {
+    public Page<EventViewDto> getAll(int page, int size) {
         // Retrieve id of the user
         Long userId = getUserId();
         // Create PageRequest object
         Pageable pageable = PageRequest.of(page, size);
         // Create page to contains event list
-        Page<EventViewDto> eventList = eventRepo.findAllByUserIdOrderByDateTimeAsc(userId, pageable);
+        Page<EventViewDto> eventList = eventRepo.findAllByUserIdOrderByDateTime(userId, pageable);
         return eventList;
     }
 
     @Override
     public boolean uniqueEvent(EventDto dto){
+        // Call repository to check if event exists
         return dto != null && !eventRepo.existsByTitleAndDateTimeAndUserId(dto.getTitle(), dto.getDateTime(), getUserId());
     }
 

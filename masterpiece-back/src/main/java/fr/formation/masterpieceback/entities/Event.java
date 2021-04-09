@@ -3,12 +3,13 @@ package fr.formation.masterpieceback.entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+// Class intended to database
+// Contains mapping with database
 @Entity
 @Table(name = "events",
         uniqueConstraints =@UniqueConstraint(name ="uq_event", columnNames = {"title", "event_datetime", "user_id"}),
         indexes = {
-        @Index(name = "idx_concerns", columnList = "user_id")
+        @Index(name = "idx_creates", columnList = "user_id")
 })
 public class Event {
     @Id
@@ -25,7 +26,7 @@ public class Event {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_concerns"))
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_creates"))
     private User user;
 
     public Event() {

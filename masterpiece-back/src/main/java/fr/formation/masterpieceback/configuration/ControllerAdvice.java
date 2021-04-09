@@ -35,7 +35,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
             ValidationError validationError = new ValidationError(attribute, code);
             validationErrors.add(validationError);
         }
-
+        // Global errors
         List<ObjectError> globalErrors = ex.getBindingResult().getGlobalErrors();
         for (ObjectError globalError : globalErrors) {
             String code = globalError.getCode();

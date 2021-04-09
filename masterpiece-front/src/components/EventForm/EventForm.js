@@ -52,16 +52,16 @@ const AddEvent = props =>{
   } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
+  // Function to open the form
   const handleClickOpen = () => {
     setSubmitting(false);
     setOpen(true);
   };
-
+  // Function to close the form
   const handleClose = () => {
     setOpen(false);
   };
-
+  // The form to create events which uses the two previous functions 
   return (
           <div>
             <Fab variant="extended" color="primary" onClick={handleClickOpen} className={classes.fab}>
@@ -132,25 +132,23 @@ const AddEvent = props =>{
           </div>   
         );
 };
-
+// The inputs validation 
 const EventForm = withFormik({
   mapPropsToValues: ({
     title,
     description,
-    dateTime,
-    userId
+    dateTime
   }) => {
     return {
       title: title || "",
       description: description || "",
       dateTime: dateTime || new Date(new Date().setHours(new Date().getHours() + 3)).toISOString().substr(0, 16),
-      userId: userId || localStorage.getItem('user_id'),
     };
   },
 
   validationSchema: Yup.object().shape({
     title: Yup.string()
-        .min(3, "Le tire requiert minimum 3 caractères")
+        .min(3, "Le titre requiert minimum 3 caractères")
         .max(18, "Le titre requiert maximum 18 caractères")
         .required("Un titre est requis"),
     description: Yup.string()

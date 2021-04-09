@@ -3,6 +3,8 @@ import labelErrors from "../config/labelErrors";
 const errorType = (error)=>{
     const status = error.status;
     let messageContainer = [];
+    console.log(error)
+    console.log(error.status)
     if (status === 400) {
         if (Array.isArray(error.data)){
             error.data.forEach(msg => {

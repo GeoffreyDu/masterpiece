@@ -18,7 +18,7 @@ import { login } from "../../config/AsyncFunc";
 const cardStyle = {
   marginBottom: "15px"
 }
-
+// The signing form
 const form = props => {
   const {
     values,
@@ -86,7 +86,7 @@ const form = props => {
     </Grid>
   );
 };
-
+// The inputs validation
 const SigninForm = withFormik({
   mapPropsToValues: ({
     mail,
@@ -100,6 +100,7 @@ const SigninForm = withFormik({
 
   validationSchema: Yup.object().shape({
     mail: Yup.string()
+      .max(255, "Le mail ne peut excéder 255 caractères")
       .email("Entrez un mail valide")
       .required("Le mail est requis"),
     password: Yup.string()
@@ -110,10 +111,9 @@ const SigninForm = withFormik({
 
   handleSubmit: (values, {props, resetForm}) => {
     const { history } = props;
-    console.log(values)
     var mail = values.mail;
     var password = values.password;
-
+    // Process to the login and redirection user's space if success 
     login(mail, password).then(logged => {
       if (logged === true) {
           resetForm();

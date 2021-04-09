@@ -2,7 +2,8 @@ package fr.formation.masterpieceback.entities;
 
 import javax.persistence.*;
 import java.util.Set;
-
+// Class intended to database
+// Contains mapping with database
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(name = "uq_mail", columnNames = {"mail"})

@@ -16,12 +16,13 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    // POST : Check users inputs, retrieve them and after call the service
     @PostMapping
     protected void create(@Valid @RequestBody UserDto dto){
         userService.create(dto);
     }
 
+    // GET : With endpoint /username, to retrieve the user's username
     @GetMapping("/username")
     protected UserUsernameViewDto getUsername(){
         return userService.getUsername();

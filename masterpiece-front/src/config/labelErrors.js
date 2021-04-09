@@ -1,5 +1,5 @@
 import LocalizedStrings from 'react-localization';
-
+// error message associted to error type
 let labelErrors = new LocalizedStrings({
     fr:{
       NotBlank:"ne doit pas être vide",
@@ -8,7 +8,7 @@ let labelErrors = new LocalizedStrings({
       UniqueEvent:"Un événement semblable existe déjà",
       FutureOrPresent:"la date ne pas être dans le passé",
       Size:"La taille est incorrecte",
-      ValidPassword:"Le mot de passe doit faire entre 8 et 20 caractères. Et au moins 1: majuscule, minuscule, chiffre, caractère spécial",
+      ValidPassword:"Le mot de passe doit faire entre 8 et 20 caractères. Et au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
       Unauthorize:"Une authentification est nécessaire pour accéder à la ressource",
       NotFound:"Ressource non trouvée",
       ServerError:"Erreur interne du serveur", 

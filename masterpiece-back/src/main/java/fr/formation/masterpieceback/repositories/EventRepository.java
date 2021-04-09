@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
-
+// Repository to communicate with the database
 public interface EventRepository extends JpaRepository<Event, Long> {
-    EventViewDto getById(Long id);
-    Page<EventViewDto> findAllByUserIdOrderByDateTimeAsc(Long userId, Pageable pageable);
+    // Derived query methods
+    Page<EventViewDto> findAllByUserIdOrderByDateTime(Long userId, Pageable pageable);
     boolean existsByTitleAndDateTimeAndUserId(String title, LocalDateTime datetime, Long userId);
 }

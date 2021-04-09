@@ -1,6 +1,5 @@
 package fr.formation.masterpieceback.constraints;
 
-import fr.formation.masterpieceback.repositories.UserRepository;
 import fr.formation.masterpieceback.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +13,7 @@ public class UniqueMailValidator implements ConstraintValidator<UniqueMail, Stri
 
     public void initialize(UniqueMail constraint) {
     }
-
+    // Call the service
     public boolean isValid(String mail, ConstraintValidatorContext context) {
         return service.uniqueMail(mail);
     }

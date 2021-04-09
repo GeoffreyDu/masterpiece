@@ -33,7 +33,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests().antMatchers(HttpMethod.POST, "/api/users/**").permitAll().and()
                 .authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
                 /*
-                 * "/api/userInfo", "/api/private/**" for fully authenticated
+                 * "/api/private/**" for fully authenticated
                  * (not anonymous)
                  */
                 .antMatchers("/api/events/**")

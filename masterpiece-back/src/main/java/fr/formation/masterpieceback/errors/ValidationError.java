@@ -1,6 +1,6 @@
 package fr.formation.masterpieceback.errors;
 
-
+// Class to retrieve formatted error
 public class ValidationError {
 
     private final String attribute;

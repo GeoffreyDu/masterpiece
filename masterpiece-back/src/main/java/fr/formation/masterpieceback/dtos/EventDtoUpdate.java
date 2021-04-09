@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-
+// Contains all constraints for event input validation
 public class EventDtoUpdate {
 
     @NotBlank

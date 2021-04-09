@@ -13,7 +13,7 @@ public class UniqueEventValidator implements ConstraintValidator<UniqueEvent, Ev
     private EventService service;
 
     public void initialize(UniqueEvent constraint){ }
-
+    // Call service to check in db if event is unique
     public boolean isValid(EventDto dto, ConstraintValidatorContext context){
         return service.uniqueEvent(dto);
     }
