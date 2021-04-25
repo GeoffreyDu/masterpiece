@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// The form to create event
 const AddEvent = props =>{
 
   const {

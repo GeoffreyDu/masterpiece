@@ -48,8 +48,11 @@ class EventContainer extends Component {
         })
     }
 
+    // Load the username in the welcome message
     loadUsername = () => {
+        // get access token from local storage
         const accessToken = getAccessToken("access_token");
+        // API call to get the username
         axios.get(`${process.env.REACT_APP_URL}/api/users/username`, {headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
             this.setState({
@@ -57,11 +60,15 @@ class EventContainer extends Component {
             })
         })
         .catch(error => {
-            errorType(error.response)
+            const errMessage = errorType(error.response)
+            // If error show message in pop up notification
+            this.props.updateOpen([errMessage], "error")
         })
     }
-
+    
+    // Method to delete event
     eventDelete = id =>{
+        // get access token from local storage
         const accessToken = getAccessToken("access_token");
         axios.delete(`${process.env.REACT_APP_URL}/api/events/${id}`, {headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
@@ -74,6 +81,7 @@ class EventContainer extends Component {
         })
     }
 
+    // Method to update an event
     eventUpdate = (event, id) =>{
         const accessToken = getAccessToken("access_token");
         axios.put(`${process.env.REACT_APP_URL}/api/events/${id}`, event, {headers:{"Content-Type":"application/json", "Authorization": `Bearer ${accessToken}`}})
@@ -86,7 +94,7 @@ class EventContainer extends Component {
             this.props.updateOpen([errMessage], "error")
         })
     }
-
+    // Method to open update form
     openUpdateForm = (id, title, date, description) =>{
         this.setState({
             updateEvent: {
@@ -99,6 +107,7 @@ class EventContainer extends Component {
         })
     }
 
+    // Method to close the update form
     closeUpdateForm = () =>{
         this.setState({
             updateEvent: {
@@ -107,9 +116,11 @@ class EventContainer extends Component {
         })
     }
 
+    //Method to load data for scrol infinite
     fetchMoreData = (page) => {
-        
+        // get access token from local storage
         const accessToken = getAccessToken("access_token");
+        // Load events and concat the following
         axios.get(`${process.env.REACT_APP_URL}/api/events/all?p=${page+1}&s=6`,{headers:{"Authorization": `Bearer ${accessToken}`}})
         .then(response => {
             this.setState({
@@ -126,7 +137,7 @@ class EventContainer extends Component {
         
       };
     
-
+    // Redirection if user isn't logged
     render() {
         const logged = IsLogged();
         if (!logged) {

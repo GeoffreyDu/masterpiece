@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
         height: "100%"
     }
   }));
+  
+  // Represents the list of events in loop (with infinite scroll)
   const EventList = (props) => {
     
     const classes = useStyles();

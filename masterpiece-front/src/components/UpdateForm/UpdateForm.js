@@ -8,7 +8,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
@@ -33,6 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// Form to update events
 const UpdateEvent = props =>{
 
   const {
@@ -117,6 +117,7 @@ const UpdateEvent = props =>{
         );
 };
 
+// The input validation
 const UpdateForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {

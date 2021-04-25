@@ -1,5 +1,6 @@
 import LocalizedStrings from 'react-localization';
- 
+
+// Label for internationalization
 let labels = new LocalizedStrings({
  fr:{
    slogan:"Il était une fois, une famille",

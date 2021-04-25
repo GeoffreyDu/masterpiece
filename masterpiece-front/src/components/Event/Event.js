@@ -16,6 +16,7 @@ const useStyles = makeStyles({
       }
 });
 
+// Respresents an event with two methods to update or delete event
 const Event = ({id, title, datetime, text, eventDelete, openUpdateForm}) => {
     const classes = useStyles()
     return(

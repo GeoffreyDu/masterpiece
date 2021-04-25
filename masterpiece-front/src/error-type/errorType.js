@@ -1,5 +1,6 @@
 import labelErrors from "../config/labelErrors";
 
+// With error status set error message
 const errorType = (error)=>{
     const status = error.status;
     let messageContainer = [];

@@ -14,6 +14,7 @@ function Copyright() {
   );
 }
 
+// The footer of all pages
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',

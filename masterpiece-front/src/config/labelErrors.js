@@ -1,5 +1,6 @@
 import LocalizedStrings from 'react-localization';
-// error message associted to error type
+
+// Error message associated to error type
 let labelErrors = new LocalizedStrings({
     fr:{
       NotBlank:"ne doit pas être vide",

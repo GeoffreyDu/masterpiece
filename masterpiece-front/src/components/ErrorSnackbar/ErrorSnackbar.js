@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+// The component to display message (success or error) to inform the user
 export default function ErrorSnackbars({ setUpdateOpen }) {
   const classes = useStyles();
 

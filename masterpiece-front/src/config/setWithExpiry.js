@@ -1,3 +1,4 @@
+// Method called during login, to format the token with access token and when the session expires 
 export default function setWithExpiry(key, value, ttl) {
     const now = new Date()
 

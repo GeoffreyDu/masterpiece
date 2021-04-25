@@ -18,6 +18,7 @@ import { login } from "../../config/AsyncFunc";
 const cardStyle = {
   marginBottom: "15px"
 }
+
 // The signing form
 const form = props => {
   const {

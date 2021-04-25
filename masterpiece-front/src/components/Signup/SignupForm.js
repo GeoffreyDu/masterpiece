@@ -20,6 +20,7 @@ const cardStyle = {
   marginBottom: "20px"
 }
 
+// The signup form
 const signupForm = props =>{
 
   const {
@@ -120,6 +121,7 @@ const signupForm = props =>{
   );
 };
 
+// Input validation
 const SignupForm = withFormik({
   mapPropsToValues: ({
     mail,
@@ -156,16 +158,14 @@ const SignupForm = withFormik({
     delete values.confirmPassword
     const { history } = props;
     const user = JSON.stringify(values);
-    
+    // POST : users creation
     axios.post(`${process.env.REACT_APP_URL}/api/users`, user, {headers:{"Content-Type":"application/json"}})
     .then(response => {
-      console.log(response)
       props.updateOpen(["Compte créé avec succès"], "success")
       history.push("/connexion")
     })
     .catch(error => {
       let errMessage = errorType(error.response)
-      console.log(error.response)
       props.updateOpen([errMessage], "error")
       }
     )

@@ -11,7 +11,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
-import HelpIcon from '@material-ui/icons/Help';
+import EventIcon from '@material-ui/icons/Event';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -71,7 +72,7 @@ function NavBar(props) {
     {text:'Inscription', path:'/inscription', icon: <AddCircleIcon/>} ,
     {text: 'Connexion', path:'/connexion', icon: <PlayCircleFilledIcon/>}
   ]
-  let navLogged = [{text: 'Evénements', path:'/evenements', icon: <HelpIcon/>}, {text: 'Déconnexion', path:{logout}, icon: <HelpIcon/>}]
+  let navLogged = [{text: 'Evénements', path:'/evenements', icon: <EventIcon/>}, {text: 'Déconnexion', path:{logout}, icon: <ExitToAppIcon/>}]
   let accessToken = localStorage.getItem('access_token');
   accessToken != null ? navLinks = navLogged : navLinks = navNotLogged;
   const handleDrawerToggle = () => {

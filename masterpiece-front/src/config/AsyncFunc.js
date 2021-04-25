@@ -2,6 +2,7 @@ import axios from "axios";
 import setWithExpiry from "./setWithExpiry";
 import errorType from "../error-type/errorType"
 
+// Asynchronous Method to log in 
 export async function login(mail, password) {
     const clientId = process.env.REACT_APP_CLIENT_ID
     const grantType = process.env.REACT_APP_GRANT_TYPE

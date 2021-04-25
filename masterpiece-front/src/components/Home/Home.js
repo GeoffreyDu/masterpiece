@@ -2,6 +2,7 @@ import React from "react";
 import labels from "../../config/config"
 import './home.css'
 
+// Homepage with little animation
 const Home = () =>{
     return(
     <div className="divBackground">
